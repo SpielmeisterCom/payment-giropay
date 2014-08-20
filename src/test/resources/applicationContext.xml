@@ -29,6 +29,7 @@
 
         <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
+            <property name="hostedService" type="service" id="pcGiropayHostedService"/>
         </service>
     </services>
 </container>
