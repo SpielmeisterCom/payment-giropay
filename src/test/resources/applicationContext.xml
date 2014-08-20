@@ -18,17 +18,16 @@
             </call>
         </service>
 
-
-        <service id="pcGiropayConfiguration" class="PegasusCommerce\Core\Payment\Service\GiropayGatewayConfigurationImpl">
+        <service id="pcGiropayConfiguration" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationImpl">
             <property name="merchantId">%gateway.giropay.merchantId%</property>
             <property name="projectId">%gateway.giropay.projectId%</property>
             <property name="secret">%gateway.giropay.secret%</property>
         </service>
 
-        <service id="pcGiropayHostedService" class="PegasusCommerce\Core\Payment\Service\GiropayHostedServiceImpl"/>
-        <service id="pcGiropayRollbackService" class="PegasusCommerce\Core\Payment\Service\GiropayRollbackServiceImpl"/>
+        <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl"/>
+        <service id="pcGiropayRollbackService" class="PegasusCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl"/>
 
-        <service id="pcGiropayConfigurationService" class="PegasusCommerce\Core\Payment\Service\GiropayConfigurationServiceImpl">
+        <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
         </service>
     </services>

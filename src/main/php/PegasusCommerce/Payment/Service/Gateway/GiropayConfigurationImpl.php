@@ -1,5 +1,5 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\PaymentGatewayType;
 use PegasusCommerce\Common\Payment\Service\failureReportingThreshold;
@@ -8,7 +8,7 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 /**
  * @Service("pcGiropayConfiguration")
  */
-class GiropayGatewayConfigurationImpl implements GiropayGatewayConfiguration {
+class GiropayConfigurationImpl implements GiropayConfiguration {
 
     public $secret;
 

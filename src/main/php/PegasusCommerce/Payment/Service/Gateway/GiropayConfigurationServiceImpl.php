@@ -1,5 +1,5 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\Service\CreditCardTypesExtensionHandler;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayConfiguration;

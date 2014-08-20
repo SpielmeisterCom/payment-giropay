@@ -1,12 +1,12 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\PaymentGatewayType;
 use PegasusCommerce\Common\Payment\Service\failureReportingThreshold;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayConfiguration;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 
-interface GiropayGatewayConfiguration extends PaymentGatewayConfiguration {
+interface GiropayConfiguration extends PaymentGatewayConfiguration {
     /**
      * @return string
      */

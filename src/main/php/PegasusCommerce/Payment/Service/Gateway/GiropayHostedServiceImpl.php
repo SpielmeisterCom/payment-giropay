@@ -1,5 +1,5 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
 use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
