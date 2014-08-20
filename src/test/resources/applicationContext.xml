@@ -24,7 +24,10 @@
             <property name="secret">%gateway.giropay.secret%</property>
         </service>
 
-        <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl"/>
+        <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
+            <property name="configuration" type="service" id="pcGiropayConfiguration"/>
+        </service>
+
         <service id="pcGiropayRollbackService" class="PegasusCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl"/>
 
         <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
