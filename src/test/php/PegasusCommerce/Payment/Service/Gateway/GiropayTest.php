@@ -21,7 +21,7 @@ class GiropayTest extends PHPUnit_Framework_TestCase {
     {
         $container = new ContainerBuilder();
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../../../resources'));
-        $loader->load('applicationContext.xml');
+        $loader->load('applicationContext-test.xml');
 
         /** @var PaymentGatewayConfigurationServiceProvider $paymentGatewayConfigurationServiceProvider */
         $paymentGatewayConfigurationServiceProvider = $container->get('paymentGatewayConfigurationServiceProvider');

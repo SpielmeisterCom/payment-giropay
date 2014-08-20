@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="gateway.giropay.merchantId">3609575</parameter>
-        <parameter key="gateway.giropay.projectId">8797</parameter>
-        <parameter key="gateway.giropay.secret">fStSrJZVfQ</parameter>
+        <parameter key="gateway.giropay.merchantId"/>
+        <parameter key="gateway.giropay.projectId"/>
+        <parameter key="gateway.giropay.secret"/>
     </parameters>
 
     <services>
