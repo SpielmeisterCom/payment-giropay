@@ -6,6 +6,9 @@ use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayRollbackService;
 use PegasusCommerce\Core\Payment\Service\Exception\PaymentException;
 
+/**
+ * @Service("pcGiropayRollbackService")
+ */
 class GiropayRollbackServiceImpl implements PaymentGatewayRollbackService {
     /**
      * @param PaymentRequestDTO $transactionToBeRolledBack

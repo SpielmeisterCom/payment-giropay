@@ -3,9 +3,14 @@ namespace PegasusCommerce\Core\Payment\Service;
 
 use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
 use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
+use PegasusCommerce\Common\Payment\PaymentType;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayHostedService;
 use PegasusCommerce\Core\Payment\Service\Exception\PaymentException;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 
+/**
+ * @Service("pcGiropayHostedService")
+ */
 class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
 
     /**
@@ -15,6 +20,6 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
      */
     public function requestHostedEndpoint(PaymentRequestDTO $paymentRequestDTO)
     {
-        // TODO: Implement requestHostedEndpoint() method.
+
     }
 }
