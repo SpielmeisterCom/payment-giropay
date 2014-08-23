@@ -20,6 +20,9 @@
         "url": "ssh://git@stash.abfallscout.de:7999/pc/pegasuscommerce.git"
     }],
     "require": {
-	"pegasuscommerce/pegasuscommerce": "dev-master"
+	    "pegasuscommerce/pegasuscommerce": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.2.2"
     }
 }
