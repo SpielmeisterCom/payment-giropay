@@ -34,11 +34,23 @@ class GiropayTest extends PHPUnit_Framework_TestCase {
         $this->giropayConfiguration = $configurationServices[0];
     }
 
+    public function testBankstatus() {
+        $fraudService = $this->giropayConfiguration->getFraudService();
+
+        $requestDTO = new PaymentRequestDTO();
+        $requestDTO
+            ->sepaBankAccount()
+            ->sepaBankAccountBIC('TESTDETT421');
+
+        $responseDTO = $fraudService->requestPayerAuthentication($requestDTO);
+
+    }
+/*
     public function testHostedService() {
         $hostedService = $this->giropayConfiguration->getHostedService();
 
         $requestDTO = new PaymentRequestDTO();
         $responseDTO = $hostedService->requestHostedEndpoint($requestDTO);
 
-    }
+    }*/
 }

@@ -3,6 +3,8 @@ namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\Service\AbstractExternalPaymentGatewayCall;
 
+require_once( __DIR__ . '/../../../Vendor/Giropay/Service/Payment/SDK/GiroCheckout_SDK.php' );
+
 abstract class AbstractGiropayService extends AbstractExternalPaymentGatewayCall {
     /**
      * @var GiropayConfiguration
@@ -25,19 +27,14 @@ abstract class AbstractGiropayService extends AbstractExternalPaymentGatewayCall
      */
     public function communicateWithVendor($paymentRequest)
     {
-        require_once( __DIR__ . '/../../../Vendor/Giropay/Service/Payment/SDK/GiroCheckout_SDK.php' );
+        /** @var GiroCheckout_SDK_Request $paymentRequest */
 
-        $request = new \GiroCheckout_SDK_Request('');
 
-        $request->setSecret($this->configuration->getSecret());
+        $paymentRequest->submit();
 
-        $request->addParam('merchantId', $this->configuration->getMerchantId())
-                ->addParam('projectId',  $this->configuration->getProjectId())
-                ->submit();
-
-        if($request->requestHasSucceeded()) {
-            $request->getResponseParam('reference');
-            $request->getResponseParam('redirect');
+        if($paymentRequest->requestHasSucceeded()) {
+            $paymentRequest->getResponseParam('reference');
+            $paymentRequest->getResponseParam('redirect');
         }
     }
 

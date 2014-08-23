@@ -41,6 +41,13 @@ class GiropayConfigurationServiceImpl implements PaymentGatewayConfigurationServ
     public $rollbackService;
 
     /**
+     * @var PaymentGatewayFraudService
+     * @Resource(name = "pcGiropayFraudService")
+     */
+    public $fraudService;
+
+
+    /**
      * @var PaymentGatewayWebResponseService
      * @Resource(name = "pcGiropayWebResponseService")
      */
@@ -108,7 +115,7 @@ class GiropayConfigurationServiceImpl implements PaymentGatewayConfigurationServ
      */
     public function getFraudService()
     {
-        return null;
+        return $this->fraudService;
     }
 
     /**
