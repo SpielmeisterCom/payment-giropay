@@ -4,6 +4,9 @@ use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\RequestInterface;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGenerator;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
 
 class GiropayPaymentServiceTest extends PHPUnit_Framework_TestCase {
 
@@ -36,9 +39,9 @@ class GiropayPaymentServiceTest extends PHPUnit_Framework_TestCase {
         $request = $this->requestGenerator->buildRequest($this->client, new \PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest());
     }
 
-    public function testbuildRequest()
+    public function testTransactionStartRequest()
     {
-        $request = new \PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest();
+        $request = new GiropayTransactionStartRequest();
         $request->setMerchantTxId(1234567890);
         $request->setAmount(100);
         $request->setCurrency("EUR");
@@ -49,21 +52,68 @@ class GiropayPaymentServiceTest extends PHPUnit_Framework_TestCase {
         $request->setUrlRedirect("http://mydomain.de/examples/redirect.php");
         $request->setUrlNotify("http://mydomain.de/examples/notify_log.php");
 
-        $request = $this->requestGenerator->buildRequest($this->client, $request);
+        $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
 
         $this->assertEquals(
             RequestInterface::POST,
-            $request->getMethod()
+            $httpRequest->getMethod()
         );
 
         $this->assertEquals(
             "https://payment.girosolution.de/girocheckout/api/v2/transaction/start",
-            $request->getUrl()
+            $httpRequest->getUrl()
         );
 
         $this->assertEquals(
-            $request->getPostField('hash'),
+            $httpRequest->getPostField('hash'),
             "78ef7a9b6b145708a0bcc1f7d4acdfdf"
         );
+    }
+
+
+    public function testTransactionStatusRequest()
+    {
+        $request = new GiropayTransactionStatusRequest();
+        $request->setReference('1234567890');
+        $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
+
+        $this->assertEquals(
+            RequestInterface::POST,
+            $httpRequest->getMethod()
+        );
+
+        $this->assertEquals(
+            "https://payment.girosolution.de/girocheckout/api/v2/transaction/status",
+            $httpRequest->getUrl()
+        );
+
+        $this->assertEquals(
+            $httpRequest->getPostField('hash'),
+            "be3341a44020021c0d6b8de95f067e28"
+        );
+    }
+
+    public function testBankstatusRequest() {
+        $request = new GiropayBankstatusRequest();
+        $request->setBic("TESTDETT421");
+
+        $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
+
+        $this->assertEquals(
+            RequestInterface::POST,
+            $httpRequest->getMethod()
+        );
+
+        $this->assertEquals(
+            "https://payment.girosolution.de/girocheckout/api/v2/giropay/bankstatus",
+            $httpRequest->getUrl()
+        );
+
+        $this->assertEquals(
+            $httpRequest->getPostField('hash'),
+            "b6e4de587edea9f2d61bd2820f0638e4"
+        );
+
+
     }
 } 

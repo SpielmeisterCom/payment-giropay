@@ -1,13 +1,28 @@
 <?php
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus;
 
-class GiropayBankstatusRequest extends GiropayRequest {
-    private $BIC;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
 
-    public function getBIC() {
-        return $this->BIC;
+class GiropayBankstatusRequest extends GiropayRequest {
+    /**
+     * @var String
+     */
+    protected $bic;
+
+    public function __construct() {
+        $this->setMethodType(GiropayMethodType::$BANKSTATUS);
     }
-    public function setBIC($BIC) {
-        $this->BIC = $BIC;
+
+    /**
+     * @return String
+     */
+    public function getBic() {
+        return $this->bic;
+    }
+
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
     }
 } 
