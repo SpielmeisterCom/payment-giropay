@@ -8,18 +8,27 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 
 interface GiropayConfiguration extends PaymentGatewayConfiguration {
     /**
-     * @return string
+     * @return String
      */
     public function getSecret();
 
     /**
-     * @return string
+     * @return String
      */
     public function getMerchantId();
 
     /**
-     * @return string
+     * @return String
      */
     public function getProjectId();
 
+    /**
+     * @return String
+     */
+    public function getNotifyUrl();
+
+    /**
+     * @return String
+     */
+    public function getRedirectUrl();
 }

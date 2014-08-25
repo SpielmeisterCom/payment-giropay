@@ -9,12 +9,30 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
  * @Service("pcGiropayConfiguration")
  */
 class GiropayConfigurationImpl implements GiropayConfiguration {
-
+    /**
+     * @var string
+     */
     public $secret;
 
+    /**
+     * @var string
+     */
     public $merchantId;
 
+    /**
+     * @var string
+     */
     public $projectId;
+
+    /**
+     * @var string
+     */
+    public $notifyUrl;
+
+    /**
+     * @var string
+     */
+    public $redirectUrl;
 
     /**
      * @var int
@@ -224,5 +242,21 @@ class GiropayConfigurationImpl implements GiropayConfiguration {
     public function getProjectId()
     {
         return $this->projectId;
+    }
+
+    /**
+     * @return String
+     */
+    public function getNotifyUrl()
+    {
+        return $this->notifyUrl;
+    }
+
+    /**
+     * @return String
+     */
+    public function getRedirectUrl()
+    {
+        return $this->redirectUrl;
     }
 }
