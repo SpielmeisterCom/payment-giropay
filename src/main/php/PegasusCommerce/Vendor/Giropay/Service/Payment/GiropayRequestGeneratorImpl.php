@@ -3,12 +3,9 @@ namespace PegasusCommerce\Vendor\Giropay\Service\Payment;
 
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
-use Guzzle\Http\Message\Request;
-use Guzzle\Http\Message\RequestInterface;
 use InvalidArgumentException;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
 
 class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {

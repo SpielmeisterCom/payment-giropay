@@ -10,7 +10,19 @@
     </parameters>
 
     <services>
-        <service id="pcHttpClient" class="GuzzleHttp\Client">
+        <service id="pcHttpClient" class="Guzzle\Http\Client">
+        </service>
+
+        <service id="pcGiropayRequestGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl">
+        </service>
+
+        <service id="pcGiropayResponseGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl">
+        </service>
+
+        <service id="pcGiropayPaymentService" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl">
+            <property name="httpClient" type="service" id="pcHttpClient"/>
+            <property name="requestGenerator" type="service" id="pcGiropayRequestGenerator"/>
+            <property name="responseGenerator" type="service" id="pcGiropayResponseGenerator"/>
         </service>
 
         <service id="paymentGatewayConfigurationServiceProvider" class="PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
@@ -29,6 +41,8 @@
 
         <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
+            <property name="giropayPaymentService" type="service" id="pcGiropayPaymentService"/>
+
         </service>
 
         <service id="pcGiropayRollbackService" class="PegasusCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl">

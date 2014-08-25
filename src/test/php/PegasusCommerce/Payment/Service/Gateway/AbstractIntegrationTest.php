@@ -1,17 +1,18 @@
 <?php
 namespace PegasusCommerce\Core\Payment\Service;
 
-use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
-use PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProvider;
-use PegasusCommerce\Payment\Service\Gateway\GiropayConfiguration;
-use PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Exception;
 
-class GiropayTest extends PHPUnit_Framework_TestCase {
+abstract class AbstractIntegrationTest extends PHPUnit_Framework_TestCase {
+    /**
+     * @var Container
+     */
+    protected $container;
+
     /**
      * @var GiropayConfigurationServiceImpl
      */
@@ -32,25 +33,6 @@ class GiropayTest extends PHPUnit_Framework_TestCase {
         }
 
         $this->giropayConfiguration = $configurationServices[0];
+        $this->container = $container;
     }
-
-    public function testBankstatus() {
-        $fraudService = $this->giropayConfiguration->getFraudService();
-
-        $requestDTO = new PaymentRequestDTO();
-        $requestDTO
-            ->sepaBankAccount()
-            ->sepaBankAccountBIC('TESTDETT421');
-
-        $responseDTO = $fraudService->requestPayerAuthentication($requestDTO);
-
-    }
-/*
-    public function testHostedService() {
-        $hostedService = $this->giropayConfiguration->getHostedService();
-
-        $requestDTO = new PaymentRequestDTO();
-        $responseDTO = $hostedService->requestHostedEndpoint($requestDTO);
-
-    }*/
-}
+} 
