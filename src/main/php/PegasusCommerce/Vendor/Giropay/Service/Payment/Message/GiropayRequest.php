@@ -1,6 +1,8 @@
 <?php
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment\Message;
 
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
+
 abstract class GiropayRequest {
     /**
      * @var GiropayMethodType
@@ -15,9 +17,9 @@ abstract class GiropayRequest {
     }
 
     /**
-     * @param GiropayRequest $methodType
+     * @param GiropayMethodType $methodType
      */
-    public function setMethodType(GiropayRequest $methodType) {
+    public function setMethodType(GiropayMethodType $methodType) {
         $this->methodType = $methodType;
     }
 
