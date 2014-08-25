@@ -49,15 +49,9 @@
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
         </service>
 
-        <service id="pcGiropayFraudService" class="PegasusCommerce\Payment\Service\Gateway\GiropayFraudServiceImpl">
-            <property name="configuration" type="service" id="pcGiropayConfiguration"/>
-            <property name="httpClient" type="service" id="pcHttpClient"/>
-        </service>
-
         <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="hostedService" type="service" id="pcGiropayHostedService"/>
-            <property name="fraudService" type="service" id="pcGiropayFraudService"/>
         </service>
     </services>
 </container>
