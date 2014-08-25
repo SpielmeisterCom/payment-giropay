@@ -52,7 +52,7 @@ class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
 
         $httpResponse = $this->httpClient->send($httpRequest);
 
-        $paymentResponseDTO = $this->responseGenerator->buildResponse($httpResponse);
+        $paymentResponseDTO = $this->responseGenerator->buildResponse($httpResponse, $paymentRequest);
 
         return $paymentResponseDTO;
     }
