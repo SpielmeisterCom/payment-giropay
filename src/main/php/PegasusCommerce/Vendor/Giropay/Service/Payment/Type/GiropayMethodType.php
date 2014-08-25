@@ -2,7 +2,7 @@
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment\Type;
 
 class GiropayMethodType {
-    private static $TYPES;
+    private static $TYPES = array();
 
     /**
      * @var GiropayType
@@ -12,7 +12,7 @@ class GiropayMethodType {
     /**
      * @var GiropayType
      */
-    public static $TRANSACTION;
+    public static $TRANSACTION_START;
 
     public function __construct($type = null, $friendlyType = null) {
         if ($friendlyType) {
@@ -40,10 +40,10 @@ class GiropayMethodType {
         }
     }
 
-    public function equals(PaymentGatewayType $obj) {
+    public function equals(GiropayMethodType $obj) {
         return ($this->getType() == $obj->getType());
     }
 }
 
-GiropayMethodType::$BANKSTATUS   = new GiropayMethodType("Bankstatus", "Bankstatus");
-GiropayMethodType::$TRANSACTION  = new GiropayMethodType("Transaction", "Transaction");
+GiropayMethodType::$BANKSTATUS          = new GiropayMethodType("bankstatus", "Bankstatus");
+GiropayMethodType::$TRANSACTION_START   = new GiropayMethodType("transaction_start", "Transaction Start");
