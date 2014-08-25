@@ -10,6 +10,9 @@
     </parameters>
 
     <services>
+        <service id="pcHttpClient" class="GuzzleHttp\Client">
+        </service>
+
         <service id="paymentGatewayConfigurationServiceProvider" class="PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
             <call method="setGatewayConfigurationServices">
                 <argument type="collection">
@@ -34,6 +37,7 @@
 
         <service id="pcGiropayFraudService" class="PegasusCommerce\Payment\Service\Gateway\GiropayFraudServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
+            <property name="httpClient" type="service" id="pcHttpClient"/>
         </service>
 
         <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
