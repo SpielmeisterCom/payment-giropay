@@ -8,7 +8,7 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBan
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
 
-class GiropayPaymentServiceTest extends PHPUnit_Framework_TestCase {
+class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @var ClientInterface
