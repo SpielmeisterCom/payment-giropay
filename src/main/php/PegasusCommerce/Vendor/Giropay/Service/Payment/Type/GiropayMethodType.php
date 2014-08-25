@@ -14,6 +14,11 @@ class GiropayMethodType {
      */
     public static $TRANSACTION_START;
 
+    /**
+     * @var GiropayType
+     */
+    public static $TRANSACTION_STATUS;
+
     public function __construct($type = null, $friendlyType = null) {
         if ($friendlyType) {
             $this->friendlyType = $friendlyType;
@@ -47,3 +52,4 @@ class GiropayMethodType {
 
 GiropayMethodType::$BANKSTATUS          = new GiropayMethodType("bankstatus", "Bankstatus");
 GiropayMethodType::$TRANSACTION_START   = new GiropayMethodType("transaction_start", "Transaction Start");
+GiropayMethodType::$TRANSACTION_STATUS  = new GiropayMethodType("transaction_status", "Transaction Status");
