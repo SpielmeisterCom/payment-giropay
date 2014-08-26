@@ -5,6 +5,7 @@ use Guzzle\Http\Message\Response;
 use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
 use PegasusCommerce\Common\Payment\PaymentGatewayType;
 use PegasusCommerce\Common\Payment\PaymentType;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayErrorResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
 
@@ -26,7 +27,14 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         );
         $data = $httpResponse->json();
 
-        print_r($httpResponse->getMessage());
+        if(array_key_exists("rc", $data) && $data["rc"] == 0) {
+
+        } else {
+            $response = new GiropayErrorResponse();
+            $response->setRc($data["rc"]);
+        }
+
+        //print_r($httpResponse->getMessage());
 
    //     print_r($httpResponse->getHeaders());
 

@@ -47,9 +47,7 @@ EOM
 
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
-
-
-        print_r($response);
-
+        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\GiropayErrorResponse", $response);
+        $this->assertEquals(5000, $response->getRc());
     }
 }
