@@ -49,8 +49,6 @@ abstract class AbstractIntegrationTest extends GuzzleTestCase {
     public function getMockHttpResponsesByPrefix($prefix) {
         $path = __DIR__ . "/../../../../../resources/mock-http-responses/";
 
-        echo $path . $prefix . "-*";
-
         $fileNames = glob( $path . $prefix . "-*");
 
         $fileNames = array_map( function($file) use ($path) {
