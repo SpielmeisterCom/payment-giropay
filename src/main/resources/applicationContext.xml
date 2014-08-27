@@ -33,6 +33,7 @@
 
         <service id="pcGiropayPaymentService" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl">
             <property name="httpClient" type="service" id="pcHttpClient"/>
+            <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="requestGenerator" type="service" id="pcGiropayRequestGenerator"/>
             <property name="responseGenerator" type="service" id="pcGiropayResponseGenerator"/>
             <property name="merchantId">%gateway.giropay.merchantId%</property>
