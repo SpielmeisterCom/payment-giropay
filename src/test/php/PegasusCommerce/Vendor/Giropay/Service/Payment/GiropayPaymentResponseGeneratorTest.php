@@ -125,8 +125,10 @@ EOM
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
+        $this->assertFalse($response->isError());
         $this->assertEquals("https://giropay.starfinanz.de/ftg/a/go/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815", $response->getRedirect());
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getReference());
+
     }
 
     public function testAuthFail() {
@@ -147,10 +149,11 @@ Content-Type: application/json
 {"rc":5000,"msg":"Authentifizierung fehlgeschlagen"}
 EOM
 );
-
+        /** @var $response GiropayTransactionStartResponse */
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertEquals(5000, $response->getRc());
+        $this->assertTrue($response->isError());
     }
 }

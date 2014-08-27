@@ -110,7 +110,7 @@ abstract class GiropayResponse {
      */
     protected $rawResponse;
 
-    public function hasError() {
+    public function isError() {
         return $this->rc != 0;
     }
 
