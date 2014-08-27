@@ -1,8 +1,9 @@
 <?php
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment;
 
-use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
+use Guzzle\Http\ClientInterface;
+use GuzzleHttp\Message\RequestInterface;
 use InvalidArgumentException;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
@@ -45,7 +46,9 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
 
         $requestArray['hash']           = $this->getHMACMD5Hash($this->getSecret(), $sortedValuesString);
 
-        $request = $client->post(
+
+        $request = $client->createRequest(
+            'POST',
             "https://payment.girosolution.de/girocheckout/api/v2/giropay/bankstatus",
             array(),
             $requestArray
