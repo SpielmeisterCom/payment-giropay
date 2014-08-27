@@ -88,21 +88,8 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
     public function testAuthFail() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 200 OK
-Date: Mon, 25 Aug 2014 17:49:03 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Mon, 25 Aug 2014 17:49:03 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1408988943"
-Content-Length: 52
-Content-Type: application/json
+        $httpResponse = self::getMockResponse('error-auth-failed.txt');
 
-{"rc":5000,"msg":"Authentifizierung fehlgeschlagen"}
-EOM
-);
         /** @var $response GiropayTransactionStartResponse */
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
