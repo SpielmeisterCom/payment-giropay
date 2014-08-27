@@ -64,7 +64,7 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
             $giropayResponse = $this->giropayPaymentService->process($giropayRequest);
 
             if($giropayResponse->isError()) {
-                throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMessage());
+                throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMsg());
             }
 
         } catch (\Exception $e) {

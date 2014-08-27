@@ -42,7 +42,26 @@ abstract class AbstractIntegrationTest extends GuzzleTestCase {
 
         $this->client = $this->container->get("pcHttpClient");
 
-        self::setMockBasePath( __DIR__ . '/../../../../../resources/mock-http-responses');
-
+        self::setMockBasePath( __DIR__ . '/../../../../../resources/mock-http-responses' );
     }
+
+
+    public function getMockHttpResponsesByPrefix($prefix) {
+        $path = __DIR__ . "/../../../../../resources/mock-http-responses/";
+
+        echo $path . $prefix . "-*";
+
+        $fileNames = glob( $path . $prefix . "-*");
+
+        $fileNames = array_map( function($file) use ($path) {
+            return array( str_replace($path, "", $file) );
+        }, $fileNames);
+
+        return $fileNames;
+    }
+
+    public function getMockHttpErrorResponses() {
+        return $this->getMockHttpResponsesByPrefix("error");
+    }
+
 } 

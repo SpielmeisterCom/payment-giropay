@@ -37,11 +37,12 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
     }
 
     /**
+     * @dataProvider getMockHttpErrorResponses
      * @expectedException PegasusCommerce\Core\Payment\Service\Exception\PaymentException
      */
-    public function testPaymentExceptionOnError() {
+    public function testPaymentExceptionOnError($errorMock) {
         $this->setMockResponse(
-            $this->client, array('error-missing-hash.txt')
+            $this->client, array( $errorMock )
         );
 
         $requestDTO = $this->generatePaymentRequestDTO();
