@@ -46,20 +46,24 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         try {
             $data = $httpResponse->json();
 
-            if(array_key_exists("rc", $data) && $data["rc"] == 0) {
+            if(!array_key_exists("rc", $data) || !is_numeric($data["rc"])) {
+                throw new \RuntimeException("Missing required response parameter rc");
+            }
+
+            $response = new GiropayTransactionStartResponse();
+            $response->setRc($data["rc"]);
+
+            if($data["rc"] == 0) {
                 $hasValidHash = $this->verifyHash($httpResponse);
 
                 if(!$hasValidHash) {
                     throw new \RuntimeException("The validation hash was invalid");
                 }
 
-                $response = new GiropayTransactionStartResponse();
                 $response->setRedirect($data["redirect"]);
                 $response->setReference($data["reference"]);
-            } else {
-                $response = new GiropayErrorResponse();
-                $response->setRc($data["rc"]);
             }
+
         } catch(Guzzle\Common\Exception\RuntimeException $e) {
             throw new \RuntimeException("Json payload could not be parsed", 0, $e);
         }

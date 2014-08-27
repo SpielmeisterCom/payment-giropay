@@ -150,7 +150,7 @@ EOM
 
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
-        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\GiropayErrorResponse", $response);
+        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertEquals(5000, $response->getRc());
     }
 }
