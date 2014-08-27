@@ -3,6 +3,7 @@ namespace PegasusCommerce\Vendor\Giropay\Service\Payment;
 
 use Guzzle\Http\ClientInterface;
 use PegasusCommerce\Common\Payment\Service\AbstractExternalPaymentGatewayCall;
+use PegasusCommerce\Payment\Service\Gateway\GiropayConfiguration;
 
 /**
  * @Service("pcGiropayPaymentService")
@@ -42,19 +43,19 @@ class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
 
 
     /**
-     * @param $paymentRequest
+     * @param $giropayRequest
      * @return mixed
      * @throws Exception
      */
-    public function communicateWithVendor($paymentRequest)
+    public function communicateWithVendor($giropayRequest)
     {
-        $httpRequest = $this->requestGenerator->buildRequest($this->httpClient, $paymentRequest);
+        $httpRequest = $this->requestGenerator->buildRequest($this->httpClient, $giropayRequest);
 
         $httpResponse = $this->httpClient->send($httpRequest);
 
-        $paymentResponseDTO = $this->responseGenerator->buildResponse($httpResponse, $paymentRequest);
+        $giropayResponse = $this->responseGenerator->buildResponse($httpResponse, $giropayRequest);
 
-        return $paymentResponseDTO;
+        return $giropayResponse;
     }
 
     /**
@@ -62,7 +63,7 @@ class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
      */
     public function getFailureReportingThreshold()
     {
-        return 1;
+        return $this->configuration->getFailureReportingThreshold();
     }
 }
 
