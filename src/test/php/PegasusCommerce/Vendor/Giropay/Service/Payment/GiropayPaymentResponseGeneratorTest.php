@@ -2,12 +2,13 @@
 use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Response;
+use Guzzle\Tests\GuzzleTestCase;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 
-class GiropayPaymentResponseGeneratorTest extends PHPUnit_Framework_TestCase {
+class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
     /**
      * @var ClientInterface
      */
@@ -25,6 +26,7 @@ class GiropayPaymentResponseGeneratorTest extends PHPUnit_Framework_TestCase {
         $responseGenerator->setSecret("fStSrJZVfQ");
 
         $this->responseGenerator = $responseGenerator;
+        self::setMockBasePath( __DIR__ . '/../../../../../../resources/mock-http-responses');
     }
 
     /**
@@ -33,22 +35,7 @@ class GiropayPaymentResponseGeneratorTest extends PHPUnit_Framework_TestCase {
     public function testServerError() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 500 Internal server error
-Date: Wed, 27 Aug 2014 11:13:42 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1409138022"
-hash: 89396d4f394d70ee640abef6bc91f972
-Content-Length: 197
-Content-Type: text/html
-
-The service exploded.
-EOM
-        );
+        $httpResponse = self::getMockResponse('error-internal-server-error.txt');
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
     }
 
@@ -58,21 +45,7 @@ EOM
     public function testMissingHash() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 200 OK
-Date: Wed, 27 Aug 2014 11:13:42 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1409138022"
-Content-Length: 197
-Content-Type: application/json
-
-{"reference":"a07af793-3c0e-4ecb-a1f4-ede94ca2e678","redirect":"https:\/\/giropay.starfinanz.de\/ftg\/a\/go\/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815","rc":"0","msg":""}
-EOM
-        );
+        $httpResponse = self::getMockResponse('error-missing-hash.txt');
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
     }
 
@@ -83,22 +56,7 @@ EOM
     public function testMalformedHash() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 200 OK
-Date: Wed, 27 Aug 2014 11:13:42 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1409138022"
-hash: 89396d4f394d70ee640abef6bc91f972
-Content-Length: 197
-Content-Type: application/json
-
-{"reference":"a07af793-3c0e-4ecb-a1f4-ede94ca2e678","redirect":"https:\/\/giropay.starfinanz.de\/ftg\/a\/go\/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815","rc":"0","msg":""}
-EOM
-        );
+        $httpResponse = self::getMockResponse('error-malformed-hash.txt');
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
     }
 
@@ -108,44 +66,15 @@ EOM
     public function testMalformedJson() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 200 OK
-Date: Wed, 27 Aug 2014 11:13:42 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1409138022"
-hash: 89396d4f394d70ee640abef6bc91f972
-Content-Length: 197
-Content-Type: application/json
-
-"reference":"a07af793-3c0e-4ecb-a1f4-ede94ca2e678","redirect":"https:\/\/giropay.starfinanz.de\/ftg\/a\/go\/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815","rc":"0","msg":""}
-EOM
-        );
+        $httpResponse = self::getMockResponse('error-malformed-json.txt');
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
     }
 
     public function testTransactionStart() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = Response::fromMessage(<<<EOM
-HTTP/1.1 200 OK
-Date: Wed, 27 Aug 2014 11:13:42 GMT
-Server: Apache/2.2.22 (Ubuntu)
-X-Drupal-Cache: MISS
-Expires: Sun, 19 Nov 1978 05:00:00 GMT
-Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
-Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
-ETag: "1409138022"
-hash: 89396d4f394d70ee640abef6bc91f971
-Content-Length: 197
-Content-Type: application/json
+        $httpResponse = self::getMockResponse('transaction-start.txt');
 
-{"reference":"a07af793-3c0e-4ecb-a1f4-ede94ca2e678","redirect":"https:\/\/giropay.starfinanz.de\/ftg\/a\/go\/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815","rc":"0","msg":""}
-EOM
-);
         /** @var $response GiropayTransactionStartResponse */
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
