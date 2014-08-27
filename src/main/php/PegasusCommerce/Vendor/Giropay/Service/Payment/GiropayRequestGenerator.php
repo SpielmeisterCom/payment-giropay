@@ -19,19 +19,4 @@ interface GiropayRequestGenerator {
      * @return EntityEnclosingRequestInterface
      */
     public function buildRequest(ClientInterface $client, GiropayRequest $giropayRequest);
-
-    /**
-     * @return String
-     */
-    public function getMerchantId();
-
-    /**
-     * @return String
-     */
-    public function getProjectId();
-
-    /**
-     * @return String
-     */
-    public function getSecret();
 }

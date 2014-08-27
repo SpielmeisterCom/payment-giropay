@@ -7,14 +7,31 @@ use PegasusCommerce\Common\Payment\PaymentGatewayType;
 use PegasusCommerce\Common\Payment\PaymentType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayErrorResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
 
 class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
+    /**
+     * @var String
+     */
+    protected $secret;
+
+    protected function getHMACMD5Hash($secret, $data) {
+        return hash_hmac('MD5', $data, $secret);
+    }
+
+    protected function verifyHash(Response $httpResponse) {
+        $hash           = $httpResponse->getHeader('hash');
+        $responseData   = $httpResponse->getBody(true);
+        $validHash      = $this->getHMACMD5Hash($this->getSecret(), $responseData);
+        $isValid        = $validHash == $hash;
+        return $isValid;
+    }
 
     /**
      * @param Response $httpResponse
      * @return PaymentResponseDTO
-     * @throws RuntimeException
+     * @throws \RuntimeException
      */
     protected function buildTransactionStartResponse(Response $httpResponse) {
         $response = new PaymentResponseDTO(
@@ -25,21 +42,27 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         $response->rawResponse(
           $httpResponse->getBody(true)
         );
-        $data = $httpResponse->json();
 
-        if(array_key_exists("rc", $data) && $data["rc"] == 0) {
+        try {
+            $data = $httpResponse->json();
 
-        } else {
-            $response = new GiropayErrorResponse();
-            $response->setRc($data["rc"]);
+            if(array_key_exists("rc", $data) && $data["rc"] == 0) {
+                $hasValidHash = $this->verifyHash($httpResponse);
+
+                if(!$hasValidHash) {
+                    throw new \RuntimeException("The validation hash was invalid");
+                }
+
+                $response = new GiropayTransactionStartResponse();
+                $response->setRedirect($data["redirect"]);
+                $response->setReference($data["reference"]);
+            } else {
+                $response = new GiropayErrorResponse();
+                $response->setRc($data["rc"]);
+            }
+        } catch(Guzzle\Common\Exception\RuntimeException $e) {
+            throw new \RuntimeException("Json payload could not be parsed", 0, $e);
         }
-
-        //print_r($httpResponse->getMessage());
-
-   //     print_r($httpResponse->getHeaders());
-
- //       print_r($response->getRawResponse());
-//        $response->valid();
 
         return $response;
 
@@ -62,7 +85,7 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
     }
 
     public function setSecret($secret) {
-
+        $this->secret = $secret;
     }
 
     /**
@@ -70,6 +93,6 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
      */
     public function getSecret()
     {
-        // TODO: Implement getSecret() method.
+        return $this->secret;
     }
 }

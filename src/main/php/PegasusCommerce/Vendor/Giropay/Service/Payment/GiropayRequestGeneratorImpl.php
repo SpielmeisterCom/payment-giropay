@@ -26,15 +26,7 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
      */
     protected $projectId;
 
-    /*
-     * returns a HMAC Hash with md5 encryption by using a secret and an array
-     *
-     * @param String password
-     * @param mixed[] data to hash
-     * @return String generated hash
-     */
-    protected function getHMACMD5Hash($secret, $data)
-    {
+    protected function getHMACMD5Hash($secret, $data) {
         return hash_hmac('MD5', $data, $secret);
     }
 
