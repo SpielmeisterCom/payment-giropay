@@ -14,15 +14,30 @@
         </service>
 
         <service id="pcGiropayRequestGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl">
+            <call method="setSecret">
+                <argument>%gateway.giropay.secret%</argument>
+            </call>
+            <call method="setProjectId">
+                <argument>%gateway.giropay.projectId%</argument>
+            </call>
+            <call method="setMerchantId">
+                <argument>%gateway.giropay.merchantId%</argument>
+            </call>
         </service>
 
         <service id="pcGiropayResponseGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl">
+            <call method="setSecret">
+                <argument>%gateway.giropay.secret%</argument>
+            </call>
         </service>
 
         <service id="pcGiropayPaymentService" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl">
             <property name="httpClient" type="service" id="pcHttpClient"/>
             <property name="requestGenerator" type="service" id="pcGiropayRequestGenerator"/>
             <property name="responseGenerator" type="service" id="pcGiropayResponseGenerator"/>
+            <property name="merchantId">%gateway.giropay.merchantId%</property>
+            <property name="projectId">%gateway.giropay.projectId%</property>
+            <property name="secret">%gateway.giropay.secret%</property>
         </service>
 
         <service id="paymentGatewayConfigurationServiceProvider" class="PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
@@ -37,6 +52,8 @@
             <property name="merchantId">%gateway.giropay.merchantId%</property>
             <property name="projectId">%gateway.giropay.projectId%</property>
             <property name="secret">%gateway.giropay.secret%</property>
+            <property name="notifyUrl">%app.baseUrl%/gateway/giropay/notify</property>
+            <property name="redirectUrl">%app.baseUrl%/gateway/giropay/redirect</property>
         </service>
 
         <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
