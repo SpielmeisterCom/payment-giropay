@@ -30,6 +30,31 @@ class GiropayPaymentResponseGeneratorTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException \RuntimeException
      */
+    public function testServerError() {
+        $request = new GiropayTransactionStartRequest();
+
+        $httpResponse = Response::fromMessage(<<<EOM
+HTTP/1.1 500 Internal server error
+Date: Wed, 27 Aug 2014 11:13:42 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Drupal-Cache: MISS
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Last-Modified: Wed, 27 Aug 2014 11:13:42 +0000
+Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
+ETag: "1409138022"
+hash: 89396d4f394d70ee640abef6bc91f972
+Content-Length: 197
+Content-Type: text/html
+
+The service exploded.
+EOM
+        );
+        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
     public function testMissingHash() {
         $request = new GiropayTransactionStartRequest();
 
