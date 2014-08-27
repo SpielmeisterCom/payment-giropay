@@ -12,6 +12,4 @@
         <parameter key="gateway.giropay.projectId">8797</parameter>
         <parameter key="gateway.giropay.secret">fStSrJZVfQ</parameter>
     </parameters>
-
-
 </container>

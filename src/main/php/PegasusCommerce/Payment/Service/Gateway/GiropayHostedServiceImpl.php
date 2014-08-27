@@ -4,10 +4,13 @@ namespace PegasusCommerce\Payment\Service\Gateway;
 use InvalidArgumentException;
 use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
 use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
+use PegasusCommerce\Common\Payment\PaymentType;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayHostedService;
 use PegasusCommerce\Common\Vendor\Service\Monitor\ServiceStatusDetectable;
 use PegasusCommerce\Core\Payment\Service\Exception\PaymentException;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 
 /**
  * @Service("pcGiropayHostedService")
@@ -57,6 +60,19 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
         $giropayRequest->setUrlRedirect($this->configuration->getRedirectUrl());
         $giropayRequest->setUrlNotify($this->configuration->getNotifyUrl());
 
-        $this->giropayPaymentService->process($giropayRequest);
+        try {
+            $giropayResponse = $this->giropayPaymentService->process($giropayRequest);
+
+            if($giropayResponse->isError()) {
+                throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMessage());
+            }
+
+        } catch (\Exception $e) {
+            throw new PaymentException("Could not process payment", 0, $e);
+        }
+
+        $responseDTO = new PaymentResponseDTO(PaymentType::$THIRD_PARTY_ACCOUNT, GiropayPaymentGatewayType::$GIROPAY);
+
+        return $responseDTO;
     }
 }

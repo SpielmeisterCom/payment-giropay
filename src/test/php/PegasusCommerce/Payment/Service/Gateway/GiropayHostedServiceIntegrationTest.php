@@ -1,5 +1,5 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
 use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProvider;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Exception;
 
-class GiropayHostedServiceTest extends AbstractIntegrationTest {
+class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
     /**
      * @var PaymentGatewayHostedService
      */
@@ -20,11 +20,11 @@ class GiropayHostedServiceTest extends AbstractIntegrationTest {
 
     public function setUp()
     {
-        parent::setUp();
+        parent::setUp('applicationContext-integrationtest.xml');
         $this->giropayHostedService = $this->container->get("pcGiropayHostedService");
     }
 
-    public function testRequestHostedEndpoint() {
+    protected function generatePaymentRequestDTO() {
         $requestDTO = new PaymentRequestDTO();
         $requestDTO
             ->orderCurrencyCode('EUR')
@@ -33,8 +33,34 @@ class GiropayHostedServiceTest extends AbstractIntegrationTest {
             ->sepaBankAccount()
             ->sepaBankAccountBIC('TESTDETT421')
             ->done();
+        return $requestDTO;
+    }
 
-        $this->giropayHostedService->requestHostedEndpoint($requestDTO);
+    /**
+     * @expectedException PegasusCommerce\Core\Payment\Service\Exception\PaymentException
+     */
+    public function testPaymentExceptionOnError() {
+        $this->setMockResponse(
+            $this->client, array('error-missing-hash.txt')
+        );
+
+        $requestDTO = $this->generatePaymentRequestDTO();
+
+        $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
+
+    }
+
+    public function testRequestHostedEndpoint() {
+        $this->setMockResponse(
+            $this->client, array('transaction-start.txt')
+        );
+
+        $requestDTO = $this->generatePaymentRequestDTO();
+
+        $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
+
+        $this->assertInstanceOf("PegasusCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+
      }
 
     /*public function testBankstatus() {

@@ -1,13 +1,16 @@
 <?php
-namespace PegasusCommerce\Core\Payment\Service;
+namespace PegasusCommerce\Payment\Service\Gateway;
 
+use Guzzle\Tests\GuzzleTestCase;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-abstract class AbstractIntegrationTest extends PHPUnit_Framework_TestCase {
+abstract class AbstractIntegrationTest extends GuzzleTestCase {
+    protected $client;
+
     /**
      * @var Container
      */
@@ -18,11 +21,13 @@ abstract class AbstractIntegrationTest extends PHPUnit_Framework_TestCase {
      */
     protected $giropayConfiguration;
 
-    public function setUp()
+    public function setUp($applicationContextFile)
     {
         $container = new ContainerBuilder();
+        $container->setParameter("app.baseUrl", "https://www.abfallscout.de");
+
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../../../resources'));
-        $loader->load('applicationContext-test.xml');
+        $loader->load($applicationContextFile);
 
         /** @var PaymentGatewayConfigurationServiceProvider $paymentGatewayConfigurationServiceProvider */
         $paymentGatewayConfigurationServiceProvider = $container->get('paymentGatewayConfigurationServiceProvider');
@@ -34,5 +39,10 @@ abstract class AbstractIntegrationTest extends PHPUnit_Framework_TestCase {
 
         $this->giropayConfiguration = $configurationServices[0];
         $this->container = $container;
+
+        $this->client = $this->container->get("pcHttpClient");
+
+        self::setMockBasePath( __DIR__ . '/../../../../../resources/mock-http-responses');
+
     }
 } 
