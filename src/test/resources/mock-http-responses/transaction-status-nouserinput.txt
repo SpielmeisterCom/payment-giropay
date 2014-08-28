@@ -1,0 +1,13 @@
+HTTP/1.1 200 OK
+Date: Thu, 28 Aug 2014 12:55:14 GMT
+Server: Apache/2.2.22 (Ubuntu)
+X-Drupal-Cache: MISS
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Last-Modified: Thu, 28 Aug 2014 12:55:14 +0000
+Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
+ETag: "1409230514"
+hash: 6688e4a9e26776dad4d667fb531e1669
+Content-Length: 194
+Content-Type: application/json
+
+{"reference":"a07af793-3c0e-4ecb-a1f4-ede94ca2e678","merchantTxId":"1234567890","backendTxId":"SHZCKE6Z91","amount":"100","currency":"EUR","resultPayment":"4501","resultAVS":"0","rc":0,"msg":""}
