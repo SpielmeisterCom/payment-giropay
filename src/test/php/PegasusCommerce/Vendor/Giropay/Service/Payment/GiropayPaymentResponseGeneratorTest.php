@@ -5,8 +5,10 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Tests\GuzzleTestCase;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
 
 class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
     /**
@@ -96,5 +98,58 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertEquals(5000, $response->getRc());
         $this->assertTrue($response->isError());
+    }
+
+    public function testTransactionStatusSuccessfulPayment()
+    {
+
+    }
+
+
+    public function testTransactionStatusNoSuccessfulPayment()
+    {
+        $request = new GiropayTransactionStatusRequest();
+
+        $httpResponse = self::getMockResponse('transaction-status-nouserinput.txt');
+
+        /** @var $response GiropayTransactionStartResponse */
+        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+
+        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStatusResponse", $response);
+        $this->assertFalse($response->isError());
+
+        //TODO: Check if payment was successful
+        //$this->assertFalse(true);
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testTransactionNotifyInvalidHash() {
+        $request = \Symfony\Component\HttpFoundation\Request::create(
+            "https://www.abfallscout.de?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=XXX",
+            "GET"
+        );
+
+        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+    }
+
+    public function testTransactionNotifySuccessfulPayment() {
+        $request = \Symfony\Component\HttpFoundation\Request::create(
+            "https://www.abfallscout.de?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=0b7d049835dcdb8f787090a0d34f52bf",
+            "GET"
+        );
+
+        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+    }
+
+    public function testTransactionNotifyUnsuccessfulPayment() {
+        $request = \Symfony\Component\HttpFoundation\Request::create(
+            "https://www.abfallscout.de/gateway/giropay/redirect?gcReference=14c85941-9a25-4baa-9422-d116c4d8b0d9&gcMerchantTxId=1234567890&gcBackendTxId=SHZD8BAHK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4502&gcHash=456748c735bd6e78bc319e0257264781",
+            "GET"
+        );
+
+        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+
     }
 }
