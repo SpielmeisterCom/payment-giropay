@@ -60,7 +60,11 @@
         <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="giropayPaymentService" type="service" id="pcGiropayPaymentService"/>
+        </service>
 
+        <service id="pcGiropayReportingService" class="PegasusCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl">
+            <property name="configuration" type="service" id="pcGiropayConfiguration"/>
+            <property name="giropayPaymentService" type="service" id="pcGiropayPaymentService"/>
         </service>
 
         <service id="pcGiropayRollbackService" class="PegasusCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl">
