@@ -4,14 +4,15 @@ namespace PegasusCommerce\Vendor\Giropay\Service\Payment;
 use Guzzle\Http\Message\Response;
 use InvalidArgumentException;
 use PegasusCommerce\Common\Payment\Dto\PaymentResponseDTO;
-use PegasusCommerce\Common\Payment\PaymentGatewayType;
 use PegasusCommerce\Common\Payment\PaymentType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayErrorResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayResponse;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
+use Symfony\Component\HttpFoundation\Request;
 
 class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
     /**
@@ -23,7 +24,7 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         return hash_hmac('MD5', $data, $secret);
     }
 
-    protected function verifyHash(Response $httpResponse) {
+    protected function verifyHttpResponseHash(Response $httpResponse) {
         $hash           = $httpResponse->getHeader('hash');
         $responseData   = $httpResponse->getBody(true);
         $validHash      = $this->getHMACMD5Hash($this->getSecret(), $responseData);
@@ -54,7 +55,7 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
             }
 
             if ($data["rc"] == 0) {
-                $hasValidHash = $this->verifyHash($httpResponse);
+                $hasValidHash = $this->verifyHttpResponseHash($httpResponse);
 
                 if (!$hasValidHash) {
                     throw new \RuntimeException("The validation hash was invalid");
@@ -87,6 +88,30 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         return $response;
     }
 
+    protected function buildTransactionNotifyResponse(Request $httpRequest) {
+        $dataForHashValidation = "";
+        foreach(array("gcReference", "gcMerchantTxId", "gcBackendTxId", "gcAmount", "gcCurrency", "gcResultPayment", "gcResultAVS") as $field) {
+            $dataForHashValidation .= $httpRequest->get($field);
+        }
+
+        $hash           = $httpRequest->get("gcHash");
+        $validHash      = $this->getHMACMD5Hash($this->getSecret(), $dataForHashValidation);
+        if($hash != $validHash) {
+            throw new \RuntimeException("The validation hash was invalid");
+        }
+
+        $response = new GiropayTransactionNotifyResponse();
+        $response->setReference($httpRequest->get("gcReference"));
+        $response->setMerchantTxId($httpRequest->get("gcMerchantTxId"));
+        $response->setBackendTxId($httpRequest->get("gcBackendTxId"));
+        $response->setAmount($httpRequest->get("gcAmount"));
+        $response->setCurrency($httpRequest->get("gcCurrency"));
+        $response->setResultPayment($httpRequest->get("gcResultPayment"));
+        $response->setResultAVS($httpRequest->get("gcResultAVS"));
+
+        return $response;
+    }
+
     /**
      * @param Response $httpResponse
      * @return PaymentResponseDTO
@@ -111,36 +136,29 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
     }
 
     /**
-     * Builds a Giropay Response of out of a Guzzle HttpResponse or Symfony HttpRequests (for callbacks)
-     * @return GiropayResponse
-     * @param Guzzle\Http\Message\Response|Symfony\Component\HttpFoundation\Request $httpResponseOrRequest
-     * @param Message\GiropayRequest $paymentRequest
-     */
-/*    public function buildResponse($httpResponseOrRequest, GiropayRequest $paymentRequest)
-    {
-        if($httpResponseOrRequest instanceof Guzzle\Http\Message\Response) {
-
-        } elseif($httpResponseOrRequest instanceof Symfony\Component\HttpFoundation\Request) {
-
-        } else {
-            throw new \InvalidArgumentException("Type " . get_class($httpResponseOrRequest) . " is not supported as first argument");
-        }
-    }
-*/
-
-
-    /**
      * @return PaymentResponseDTO
      */
     public function buildResponse($httpResponseOrRequest, GiropayRequest $paymentRequest)
     {
         $giropayResponse = null;
 
-        if(GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethodType())) {
+        if(
+            $httpResponseOrRequest instanceof Response &&
+            GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethodType())
+        ) {
             $giropayResponse = $this->buildTransactionStartResponse($httpResponseOrRequest);
 
-        } elseif (GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethodType())) {
+        } elseif (
+            $httpResponseOrRequest instanceof Response &&
+            GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethodType())
+        ) {
             $giropayResponse = $this->buildTransactionStatusResponse($httpResponseOrRequest);
+
+        } elseif (
+            $httpResponseOrRequest instanceof Request &&
+            GiropayMethodType::$TRANSACTION_NOTIFY->equals($paymentRequest->getMethodType())
+        ) {
+            $giropayResponse = $this->buildTransactionNotifyResponse($httpResponseOrRequest);
 
         } else {
             throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethodType()->getFriendlyType());
