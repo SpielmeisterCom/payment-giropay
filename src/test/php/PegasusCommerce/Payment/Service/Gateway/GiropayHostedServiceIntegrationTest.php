@@ -68,6 +68,9 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getResponseMap()[GiropayConstants::GATEWAY_TRANSACTION_ID]);
     }
 
+    /**
+     * @group liveTest
+     */
     public function testRequestHostedEndpointLive() {
         $requestDTO = $this->generatePaymentRequestDTO();
 
