@@ -70,7 +70,7 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
             }
 
         } catch (\Exception $e) {
-            throw new PaymentException("Could not process payment", 0, $e);
+            throw new PaymentException("Could not process payment: " . $e->getMessage(), 0, $e);
         }
 
         $responseDTO = new PaymentResponseDTO(PaymentType::$THIRD_PARTY_ACCOUNT, GiropayPaymentGatewayType::$GIROPAY);
