@@ -8,6 +8,7 @@ use PegasusCommerce\Common\Payment\PaymentType;
 use PegasusCommerce\Common\Payment\Service\PaymentGatewayHostedService;
 use PegasusCommerce\Common\Vendor\Service\Monitor\ServiceStatusDetectable;
 use PegasusCommerce\Core\Payment\Service\Exception\PaymentException;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
@@ -62,6 +63,7 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
 
         try {
             $giropayResponse = $this->giropayPaymentService->process($giropayRequest);
+            /** @var GiropayTransactionStartResponse $giropayResponse */
 
             if($giropayResponse->isError()) {
                 throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMsg());
@@ -72,6 +74,10 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
         }
 
         $responseDTO = new PaymentResponseDTO(PaymentType::$THIRD_PARTY_ACCOUNT, GiropayPaymentGatewayType::$GIROPAY);
+        $responseDTO
+            ->responseMap(GiropayConstants::HOSTED_REDIRECT_URL, $giropayResponse->getRedirect())
+            ->responseMap(GiropayConstants::GATEWAY_TRANSACTION_ID, $giropayResponse->getReference()
+        );
 
         return $responseDTO;
     }

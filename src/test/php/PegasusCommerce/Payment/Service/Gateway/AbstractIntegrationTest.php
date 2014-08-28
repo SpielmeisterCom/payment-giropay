@@ -21,13 +21,15 @@ abstract class AbstractIntegrationTest extends GuzzleTestCase {
      */
     protected $giropayConfiguration;
 
-    public function setUp($applicationContextFile)
+    public function setUp()
     {
+        date_default_timezone_set('Europe/Berlin');
+
         $container = new ContainerBuilder();
         $container->setParameter("app.baseUrl", "https://www.abfallscout.de");
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../../../resources'));
-        $loader->load($applicationContextFile);
+        $loader->load("applicationContext-integrationtest.xml");
 
         /** @var PaymentGatewayConfigurationServiceProvider $paymentGatewayConfigurationServiceProvider */
         $paymentGatewayConfigurationServiceProvider = $container->get('paymentGatewayConfigurationServiceProvider');
