@@ -41,6 +41,28 @@ class GiropayTransactionStatusResponse extends GiropayResponse {
     protected $resultAVS;
 
     /**
+     * merchant transaction ID
+     * @var String
+     */
+    protected $merchantTxId;
+
+    /**
+     * @return String
+     */
+    public function getMerchantTxId()
+    {
+        return $this->merchantTxId;
+    }
+
+    /**
+     * @param String $merchantTxId
+     */
+    public function setMerchantTxId($merchantTxId)
+    {
+        $this->merchantTxId = $merchantTxId;
+    }
+
+    /**
      * @return int
      */
     public function getAmount()
