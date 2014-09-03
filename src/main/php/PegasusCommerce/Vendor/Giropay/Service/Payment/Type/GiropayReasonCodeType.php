@@ -297,6 +297,10 @@ class GiropayReasonCodeType {
      * @var GiropayReasonCodeType
      */
     public static $BANK_DOES_NOT_SUPPORT_GIROPAY;
+
+    /**
+     * @var GiropayReasonCodeType
+     */
     public static $INTERNAL_ERROR;
 
 
