@@ -40,7 +40,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $request = new GiropayTransactionStartRequest();
 
         $httpResponse = self::getMockResponse('error-internal-server-error.txt');
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
     /**
@@ -50,7 +50,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $request = new GiropayTransactionStartRequest();
 
         $httpResponse = self::getMockResponse('error-missing-hash.txt');
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
 
@@ -61,7 +61,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $request = new GiropayTransactionStartRequest();
 
         $httpResponse = self::getMockResponse('error-malformed-hash.txt');
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
     /**
@@ -71,7 +71,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $request = new GiropayTransactionStartRequest();
 
         $httpResponse = self::getMockResponse('error-malformed-json.txt');
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
     public function testTransactionStart() {
@@ -80,7 +80,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $httpResponse = self::getMockResponse('transaction-start.txt');
 
         /** @var $response GiropayTransactionStartResponse */
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertTrue(GiropayResultType::$OK->equals($response->getResult()));
@@ -95,7 +95,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $httpResponse = self::getMockResponse('error-auth-failed.txt');
 
         /** @var $response GiropayTransactionStartResponse */
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertTrue(GiropayResultType::$AUTHENTICATION_FAILED->equals($response->getResult()));
@@ -114,7 +114,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $httpResponse = self::getMockResponse('transaction-status-nouserinput.txt');
 
         /** @var $response GiropayTransactionStatusResponse */
-        $response = $this->responseGenerator->buildResponse($httpResponse, $request);
+        $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStatusResponse", $response);
         $this->assertTrue(GiropayPaymentResultType::$TIMEOUT_NO_USER_INPUT->equals($response->getPaymentResult()));
@@ -125,29 +125,29 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
      */
     public function testTransactionNotifyInvalidHash() {
         $request = \Symfony\Component\HttpFoundation\Request::create(
-            "https://www.abfallscout.de?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=XXX",
+            "https://www.host.tld/gateway/giropay/redirect?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=XXX",
             "GET"
         );
 
-        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+        $response = $this->responseGenerator->buildResponseFromHttpRequest($request, new GiropayTransactionNotifyRequest());
     }
 
     public function testTransactionNotifySuccessfulPayment() {
         $request = \Symfony\Component\HttpFoundation\Request::create(
-            "https://www.abfallscout.de?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=0b7d049835dcdb8f787090a0d34f52bf",
+            "https://www.host.tld/gateway/giropay/redirect?gcReference=1c16e60f-c8a6-4886-8b74-2823b2a998b9&gcMerchantTxId=1234567890&gcBackendTxId=SHZDX3SGK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4000&gcHash=0b7d049835dcdb8f787090a0d34f52bf",
             "GET"
         );
 
-        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+        $response = $this->responseGenerator->buildResponseFromHttpRequest($request, new GiropayTransactionNotifyRequest());
     }
 
     public function testTransactionNotifyUnsuccessfulPayment() {
         $request = \Symfony\Component\HttpFoundation\Request::create(
-            "https://www.abfallscout.de/gateway/giropay/redirect?gcReference=14c85941-9a25-4baa-9422-d116c4d8b0d9&gcMerchantTxId=1234567890&gcBackendTxId=SHZD8BAHK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4502&gcHash=456748c735bd6e78bc319e0257264781",
+            "https://www.host.tld/gateway/giropay/redirect?gcReference=14c85941-9a25-4baa-9422-d116c4d8b0d9&gcMerchantTxId=1234567890&gcBackendTxId=SHZD8BAHK1&gcAmount=100&gcCurrency=EUR&gcResultPayment=4502&gcHash=456748c735bd6e78bc319e0257264781",
             "GET"
         );
 
-        $response = $this->responseGenerator->buildResponse($request, new GiropayTransactionNotifyRequest());
+        $response = $this->responseGenerator->buildResponseFromHttpRequest($request, new GiropayTransactionNotifyRequest());
 
     }
 }
