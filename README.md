@@ -15,3 +15,9 @@ The following giropay services are *NOT* implemented yet:
   * iDEAL
 
 For more information about the api specification visit http://api.girocheckout.de/
+
+## Tests
+
+There are live tests included in the test suites. They're simulating a browser and doing a full giropay checkout.
+You might want to disable them during local development. Use the `--exclude-group liveTest` option to phpunit to do that.
+
