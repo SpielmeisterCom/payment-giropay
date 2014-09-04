@@ -1,10 +1,58 @@
 <?php
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment\Type;
 
-class GiropayResultCodePaymentType {
+class GiropayPaymentResultCodeType {
     private static $TYPES = array();
 
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $TRANSACTION_SUCCESSFUL;
 
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $GIROPAY_TRANSACTION_SUCCESSFUL;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $GIROPAY_ONLINE_BANKING_ACCOUNT_INVALID;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $GIROPAY_PAYMENT_RESULT_UNKNOWN;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $TIMEOUT_NO_USER_INPUT;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $USER_ABORTED;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $DUPLICATE_TRANSACTION;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $MANIPULATION_OR_TEMPORARILY_BLOCKED;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $PAYMENT_METHOD_BLOCKED_OR_REJECTED;
+
+    /**
+     * @var GiropayPaymentResultCodeType
+     */
+    public static $TRANSACTION_REJECTED;
 
     public function __construct($type = null, $friendlyType = null) {
         if ($friendlyType) {
@@ -32,38 +80,18 @@ class GiropayResultCodePaymentType {
         }
     }
 
-    public function equals(GiropayResultCodeType $obj) {
+    public function equals(GiropayPaymentResultCodeType $obj) {
         return ($this->getType() == $obj->getType());
     }
 }
 
-/*
- * gcResultPayment/ resultPayment	description
-4000	transaction successful
-giropay
-4001	transaction successful
-4002	online banking account invalid
-4500	Zahlungsaugang unbekannt
-Lastschrift
-4051	invalid bank account
-Kreditkarte
-4101	issuing country invalid or unknown
-4102	3D-Secure or MasterCard SecureCode authorization failed
-4103	validation date of card exceeded
-4104	invalid or unknown card type
-4105	limited-use card
-4106	invalid pseudo-cardnumber
-4107	card stolen, suspicious or marked to move in
-PayPal
-4151	invalid PayPal token
-4152	post-processing necessary at PayPal
-4153	change PayPal payment method
-4154	PayPal-payment is not completed
-Allgemein
-4501	timeout / no user input
-4502	user aborted
-4503	duplicate transaction
-4504	uspicion of manipulation or payment method temporarily blocked
-4505	payment method blocked or rejected
-4900	transaction rejected
- */
+GiropayPaymentResultCodeType::$TRANSACTION_SUCCESSFUL                  = new GiropayResultCodeType(4000, "transaction successful");
+GiropayPaymentResultCodeType::$GIROPAY_TRANSACTION_SUCCESSFUL          = new GiropayResultCodeType(4001, "giropay transaction successful");
+GiropayPaymentResultCodeType::$GIROPAY_ONLINE_BANKING_ACCOUNT_INVALID  = new GiropayResultCodeType(4002, "giropay online banking account invalid");
+GiropayPaymentResultCodeType::$GIROPAY_PAYMENT_RESULT_UNKNOWN          = new GiropayResultCodeType(4500, "giropay payment result unknown");
+GiropayPaymentResultCodeType::$TIMEOUT_NO_USER_INPUT                   = new GiropayResultCodeType(4501, "timeout / no user input");
+GiropayPaymentResultCodeType::$USER_ABORTED                            = new GiropayResultCodeType(4502, "user aborted");
+GiropayPaymentResultCodeType::$DUPLICATE_TRANSACTION                   = new GiropayResultCodeType(4503, "duplicate transaction");
+GiropayPaymentResultCodeType::$MANIPULATION_OR_TEMPORARILY_BLOCKED     = new GiropayResultCodeType(4504, "suspicion of manipulation or payment method temporarily blocked");
+GiropayPaymentResultCodeType::$PAYMENT_METHOD_BLOCKED_OR_REJECTED      = new GiropayResultCodeType(4505, "payment method blocked or rejected");
+GiropayPaymentResultCodeType::$TRANSACTION_REJECTED                    = new GiropayResultCodeType(4900, "transaction rejected");
