@@ -150,38 +150,6 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         return $response;
     }
 
-    /**
-     * @return PaymentResponseDTO
-     */
-    public function buildResponse($httpResponseOrRequest, GiropayRequest $paymentRequest)
-    {
-        $giropayResponse = null;
-
-        if(
-            $httpResponseOrRequest instanceof Response &&
-            GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethod())
-        ) {
-            $giropayResponse = $this->buildTransactionStartResponse($httpResponseOrRequest);
-
-        } elseif (
-            $httpResponseOrRequest instanceof Response &&
-            GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethod())
-        ) {
-            $giropayResponse = $this->buildTransactionStatusResponse($httpResponseOrRequest);
-
-        } elseif (
-            $httpResponseOrRequest instanceof Request &&
-            GiropayMethodType::$TRANSACTION_NOTIFY->equals($paymentRequest->getMethod())
-        ) {
-            $giropayResponse = $this->buildTransactionNotifyResponse($httpResponseOrRequest);
-
-        } else {
-            throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethod()->getFriendlyType());
-        }
-
-        return $giropayResponse;
-    }
-
     public function setSecret($secret) {
         $this->secret = $secret;
     }
@@ -192,5 +160,47 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
     public function getSecret()
     {
         return $this->secret;
+    }
+
+    /**
+     * Builds a Giropay Response of out of a Symfony HttpRequest (for callbacks)
+     * @return GiropayResponse
+     * @param \Symfony\Component\HttpFoundation\Request $httpRequest
+     * @param Message\GiropayRequest $paymentRequest
+     */
+    public function buildResponseFromHttpRequest(Request $httpRequest, GiropayRequest $paymentRequest)
+    {
+        $giropayResponse = null;
+
+        if(GiropayMethodType::$TRANSACTION_NOTIFY->equals($paymentRequest->getMethod())) {
+            $giropayResponse = $this->buildTransactionNotifyResponse($httpRequest);
+        } else {
+            throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethod()->getFriendlyType());
+        }
+
+        return $giropayResponse;
+    }
+
+    /**
+     * Builds a Giropay Response of out of a Guzzle HttpResponse
+     * @return GiropayResponse
+     * @param \GuzzleHttp\Message\Response $httpResponse
+     * @param Message\GiropayRequest $paymentRequest
+     */
+    public function buildResponseFromHttpResponse(Response $httpResponse, GiropayRequest $paymentRequest)
+    {
+        $giropayResponse = null;
+
+        if( GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethod()) ) {
+            $giropayResponse = $this->buildTransactionStartResponse($httpResponse);
+
+        } elseif ( GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethod()) ) {
+            $giropayResponse = $this->buildTransactionStatusResponse($httpResponse);
+
+        } else {
+            throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethod()->getFriendlyType());
+        }
+
+        return $giropayResponse;
     }
 }

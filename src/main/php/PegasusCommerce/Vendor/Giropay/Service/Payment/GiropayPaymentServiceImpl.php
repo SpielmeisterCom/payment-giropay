@@ -53,7 +53,7 @@ class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
 
         $httpResponse = $this->httpClient->send($httpRequest);
 
-        $giropayResponse = $this->responseGenerator->buildResponse($httpResponse, $giropayRequest);
+        $giropayResponse = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $giropayRequest);
 
         return $giropayResponse;
     }

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: julian
- * Date: 25.08.14
- * Time: 12:33
- */
-
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment;
 
 use Guzzle\Http\ClientInterface;
