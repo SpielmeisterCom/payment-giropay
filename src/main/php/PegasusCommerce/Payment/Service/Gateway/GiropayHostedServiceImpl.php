@@ -12,6 +12,7 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
 /**
  * @Service("pcGiropayHostedService")
@@ -65,8 +66,8 @@ class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
             $giropayResponse = $this->giropayPaymentService->process($giropayRequest);
             /** @var GiropayTransactionStartResponse $giropayResponse */
 
-            if($giropayResponse->isError()) {
-                throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMsg());
+            if(!GiropayResultType::$OK->equals($giropayResponse->getResult())) {
+                throw new PaymentException($giropayResponse->getResult()->getType() . ' (' . $giropayResponse->getResult()->getFriendlyType() . ')' );
             }
 
         } catch (\Exception $e) {

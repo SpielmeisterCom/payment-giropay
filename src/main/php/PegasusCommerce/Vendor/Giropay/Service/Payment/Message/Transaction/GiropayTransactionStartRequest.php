@@ -115,7 +115,7 @@ class GiropayTransactionStartRequest extends GiropayRequest {
     protected $urlNotify;
 
     public function __construct() {
-        $this->setMethodType(GiropayMethodType::$TRANSACTION_START);
+        $this->setMethod(GiropayMethodType::$TRANSACTION_START);
     }
 
     /**

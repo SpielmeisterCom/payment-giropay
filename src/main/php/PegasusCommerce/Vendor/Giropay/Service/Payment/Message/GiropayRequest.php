@@ -7,23 +7,23 @@ abstract class GiropayRequest {
     /**
      * @var GiropayMethodType
      */
-    protected $methodType;
+    protected $method;
 
     /**
      * @return GiropayMethodType
      */
-    public function getMethodType() {
-        return $this->methodType;
+    public function getMethod() {
+        return $this->method;
     }
 
     /**
-     * @param GiropayMethodType $methodType
+     * @param GiropayMethodType $method
      */
-    public function setMethodType(GiropayMethodType $methodType) {
-        $this->methodType = $methodType;
+    public function setMethod(GiropayMethodType $method) {
+        $this->method = $method;
     }
 
     public function equals(GiropayRequest $o) {
-        return $this->getMethodType() == $o->getMethodType();
+        return $this->getMethod() == $o->getMethod();
     }
 }

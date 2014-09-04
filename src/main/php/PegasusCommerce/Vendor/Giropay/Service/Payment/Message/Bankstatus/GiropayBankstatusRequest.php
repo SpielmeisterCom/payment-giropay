@@ -11,7 +11,7 @@ class GiropayBankstatusRequest extends GiropayRequest {
     protected $bic;
 
     public function __construct() {
-        $this->setMethodType(GiropayMethodType::$BANKSTATUS);
+        $this->setMethod(GiropayMethodType::$BANKSTATUS);
     }
 
     /**

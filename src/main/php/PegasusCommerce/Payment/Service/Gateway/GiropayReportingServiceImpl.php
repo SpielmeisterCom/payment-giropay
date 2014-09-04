@@ -9,6 +9,9 @@ use PegasusCommerce\Core\Payment\Service\Exception\PaymentException;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusResponse;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
 class GiropayReportingServiceImpl implements PaymentGatewayReportingService {
     /**
@@ -43,8 +46,8 @@ class GiropayReportingServiceImpl implements PaymentGatewayReportingService {
             $giropayResponse = $this->giropayPaymentService->process($giropayRequest);
             /** @var GiropayTransactionStatusResponse $giropayResponse */
 
-            if($giropayResponse->isError()) {
-                throw new PaymentException($giropayResponse->getRc().": ".$giropayResponse->getMsg());
+            if(!GiropayResultType::$OK->equals($giropayResponse->getResult())) {
+                throw new PaymentException($giropayResponse->getResult()->getType() . '(' . $giropayResponse->getResult()->getFriendlyType() . ')');
             }
 
         } catch (\Exception $e) {
@@ -52,6 +55,11 @@ class GiropayReportingServiceImpl implements PaymentGatewayReportingService {
         }
 
         $responseDTO = new PaymentResponseDTO(PaymentType::$THIRD_PARTY_ACCOUNT, GiropayPaymentGatewayType::$GIROPAY);
+
+        $responseDTO->successful(
+            GiropayPaymentResultType::$TRANSACTION_SUCCESSFUL->equals($giropayResponse->getPaymentResult())
+         );
+
        /* $responseDTO
             ->responseMap(GiropayConstants::HOSTED_REDIRECT_URL, $giropayResponse->getRedirect())
             ->responseMap(GiropayConstants::GATEWAY_TRANSACTION_ID, $giropayResponse->getReference()

@@ -159,24 +159,24 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
 
         if(
             $httpResponseOrRequest instanceof Response &&
-            GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethodType())
+            GiropayMethodType::$TRANSACTION_START->equals($paymentRequest->getMethod())
         ) {
             $giropayResponse = $this->buildTransactionStartResponse($httpResponseOrRequest);
 
         } elseif (
             $httpResponseOrRequest instanceof Response &&
-            GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethodType())
+            GiropayMethodType::$TRANSACTION_STATUS->equals($paymentRequest->getMethod())
         ) {
             $giropayResponse = $this->buildTransactionStatusResponse($httpResponseOrRequest);
 
         } elseif (
             $httpResponseOrRequest instanceof Request &&
-            GiropayMethodType::$TRANSACTION_NOTIFY->equals($paymentRequest->getMethodType())
+            GiropayMethodType::$TRANSACTION_NOTIFY->equals($paymentRequest->getMethod())
         ) {
             $giropayResponse = $this->buildTransactionNotifyResponse($httpResponseOrRequest);
 
         } else {
-            throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethodType()->getFriendlyType());
+            throw new \InvalidArgumentException("Method type not supported: " . $paymentRequest->getMethod()->getFriendlyType());
         }
 
         return $giropayResponse;

@@ -10,6 +10,6 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
  */
 class GiropayTransactionNotifyRequest extends GiropayRequest {
     public function __construct() {
-        $this->setMethodType(GiropayMethodType::$TRANSACTION_NOTIFY);
+        $this->setMethod(GiropayMethodType::$TRANSACTION_NOTIFY);
     }
 }

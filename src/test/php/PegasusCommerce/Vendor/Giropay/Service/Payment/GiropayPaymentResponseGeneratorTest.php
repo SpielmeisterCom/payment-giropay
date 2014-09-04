@@ -9,6 +9,8 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTr
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
 class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
     /**
@@ -81,7 +83,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
-        $this->assertFalse($response->isError());
+        $this->assertTrue(GiropayResultType::$OK->equals($response->getResult()));
         $this->assertEquals("https://giropay.starfinanz.de/ftg/a/go/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815", $response->getRedirect());
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getReference());
 
@@ -96,8 +98,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
-        $this->assertEquals(5000, $response->getRc());
-        $this->assertTrue($response->isError());
+        $this->assertTrue(GiropayResultType::$AUTHENTICATION_FAILED->equals($response->getResult()));
     }
 
     public function testTransactionStatusSuccessfulPayment()
@@ -112,14 +113,11 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
 
         $httpResponse = self::getMockResponse('transaction-status-nouserinput.txt');
 
-        /** @var $response GiropayTransactionStartResponse */
+        /** @var $response GiropayTransactionStatusResponse */
         $response = $this->responseGenerator->buildResponse($httpResponse, $request);
 
         $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStatusResponse", $response);
-        $this->assertFalse($response->isError());
-
-        //TODO: Check if payment was successful
-        //$this->assertFalse(true);
+        $this->assertTrue(GiropayPaymentResultType::$TIMEOUT_NO_USER_INPUT->equals($response->getPaymentResult()));
     }
 
     /**

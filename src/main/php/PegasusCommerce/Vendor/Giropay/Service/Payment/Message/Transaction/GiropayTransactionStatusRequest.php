@@ -11,7 +11,7 @@ class GiropayTransactionStatusRequest extends GiropayRequest {
     protected $reference;
 
     public function __construct() {
-        $this->setMethodType(GiropayMethodType::$TRANSACTION_STATUS);
+        $this->setMethod(GiropayMethodType::$TRANSACTION_STATUS);
     }
 
     /**

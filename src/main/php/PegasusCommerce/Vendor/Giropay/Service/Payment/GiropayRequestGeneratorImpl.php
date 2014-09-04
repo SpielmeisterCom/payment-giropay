@@ -172,17 +172,17 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
     {
         $request = null;
 
-        if(GiropayMethodType::$TRANSACTION_START->equals($giropayRequest->getMethodType())) {
+        if(GiropayMethodType::$TRANSACTION_START->equals($giropayRequest->getMethod())) {
             $request = $this->buildTransactionStartRequest($client, $giropayRequest);
 
-        } else if(GiropayMethodType::$TRANSACTION_STATUS->equals($giropayRequest->getMethodType())) {
+        } else if(GiropayMethodType::$TRANSACTION_STATUS->equals($giropayRequest->getMethod())) {
             $request = $this->buildTransactionStatusRequest($client, $giropayRequest);
 
-        } else if(GiropayMethodType::$BANKSTATUS->equals($giropayRequest->getMethodType())) {
+        } else if(GiropayMethodType::$BANKSTATUS->equals($giropayRequest->getMethod())) {
             $request = $this->buildBankstatusRequest($client, $giropayRequest);
 
         } else {
-            throw new InvalidArgumentException("Method type not supported: " . $giropayRequest->getMethodType()->getFriendlyType());
+            throw new InvalidArgumentException("Method type not supported: " . $giropayRequest->getMethod()->getFriendlyType());
         }
 
         return $request;
