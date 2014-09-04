@@ -2,6 +2,7 @@
 namespace PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction;
 
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\GiropayResponse;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
 
 class GiropayTransactionStatusResponse extends GiropayResponse {
     /**
@@ -29,16 +30,10 @@ class GiropayTransactionStatusResponse extends GiropayResponse {
     protected $currency;
 
     /**
-     * payment result codes
-     * @var int
+     * payment result
+     * @var GiropayPaymentResultType
      */
-    protected $resultPayment;
-
-    /**
-     * age verification result codes
-     * @var int
-     */
-    protected $resultAVS;
+    protected $paymentResult;
 
     /**
      * merchant transaction ID
@@ -127,35 +122,20 @@ class GiropayTransactionStatusResponse extends GiropayResponse {
     }
 
     /**
-     * @return int
+     * @return GiropayPaymentResultType
      */
-    public function getResultAVS()
+    public function getPaymentResult()
     {
-        return $this->resultAVS;
+        return $this->paymentResult;
     }
 
     /**
-     * @param int $resultAVS
+     * @param GiropayPaymentResultType $paymentResult
      */
-    public function setResultAVS($resultAVS)
+    public function setPaymentResult(GiropayPaymentResultType $paymentResult)
     {
-        $this->resultAVS = $resultAVS;
+        $this->paymentResult = $paymentResult;
     }
 
-    /**
-     * @return int
-     */
-    public function getResultPayment()
-    {
-        return $this->resultPayment;
-    }
-
-    /**
-     * @param int $resultPayment
-     */
-    public function setResultPayment($resultPayment)
-    {
-        $this->resultPayment = $resultPayment;
-    }
 
 } 

@@ -12,6 +12,8 @@ use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTr
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusResponse;
 use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayMethodType;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
+use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 use Symfony\Component\HttpFoundation\Request;
 
 class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
@@ -37,7 +39,7 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
      * @return array
      * @throws \RuntimeException
      */
-    protected function extractDataFromResponse($httpResponse) {
+    protected function extractDataFromResponse($httpResponse, GiropayResponse $giropayResponse) {
         $response = new PaymentResponseDTO(
             PaymentType::$BANK_ACCOUNT,
             GiropayPaymentGatewayType::$GIROPAY
@@ -54,12 +56,15 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
                 throw new \RuntimeException("Missing required response parameter rc");
             }
 
-            if ($data["rc"] == 0) {
-                $hasValidHash = $this->verifyHttpResponseHash($httpResponse);
+            if (!array_key_exists($data["rc"], GiropayResultType::$TYPES)) {
+                throw new \RuntimeException("Unknown Result Code: " . $data["rc"]);
+            }
 
-                if (!$hasValidHash) {
-                    throw new \RuntimeException("The validation hash was invalid");
-                }
+            $result = GiropayResultType::$TYPES[$data["rc"]];
+            $giropayResponse->setResult($result);
+
+            if(GiropayResultType::$OK->equals($result) && !$this->verifyHttpResponseHash($httpResponse)) {
+                throw new \RuntimeException("The validation hash was invalid");
             }
 
         } catch(Guzzle\Common\Exception\RuntimeException $e) {
@@ -75,12 +80,10 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
      * @throws \RuntimeException
      */
     protected function buildTransactionStartResponse(Response $httpResponse) {
-        $data = $this->extractDataFromResponse($httpResponse);
-
         $response = new GiropayTransactionStartResponse();
-        $response->setRc($data["rc"]);
+        $data = $this->extractDataFromResponse($httpResponse, $response);
 
-        if(!$response->isError()) {
+        if(GiropayResultType::$OK->equals($response->getResult())) {
             $response->setRedirect($data["redirect"]);
             $response->setReference($data["reference"]);
         }
@@ -106,8 +109,15 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
         $response->setBackendTxId($httpRequest->get("gcBackendTxId"));
         $response->setAmount($httpRequest->get("gcAmount"));
         $response->setCurrency($httpRequest->get("gcCurrency"));
-        $response->setResultPayment($httpRequest->get("gcResultPayment"));
-        $response->setResultAVS($httpRequest->get("gcResultAVS"));
+
+        if (!array_key_exists($httpRequest->get("gcResultPayment"), GiropayPaymentResultType::$TYPES)) {
+            throw new \RuntimeException("Unknown Payment Result: " . $httpRequest->get("gcResultPayment"));
+        }
+
+        $paymentResult = GiropayPaymentResultType::$TYPES[$httpRequest->get("gcResultPayment")];
+        $response->setPaymentResult($paymentResult);
+
+        //$response->setResultAVS($httpRequest->get("gcResultAVS"));
 
         return $response;
     }
@@ -118,18 +128,23 @@ class GiropayResponseGeneratorImpl implements GiropayResponseGenerator {
      * @throws \RuntimeException
      */
     protected function buildTransactionStatusResponse(Response $httpResponse) {
-        $data = $this->extractDataFromResponse($httpResponse);
-
         $response = new GiropayTransactionStatusResponse();
-        $response->setRc($data["rc"]);
+        $data = $this->extractDataFromResponse($httpResponse, $response);
 
-        if(!$response->isError()) {
+        if(GiropayResultType::$OK->equals($response->getResult())) {
+            if (!array_key_exists($data["resultPayment"], GiropayPaymentResultType::$TYPES)) {
+                throw new \RuntimeException("Unknown Payment Result: " . $data["resultPayment"]);
+            }
+
+            $paymentResult = GiropayPaymentResultType::$TYPES[$data["resultPayment"]];
+            $response->setPaymentResult($paymentResult);
+
             $response->setReference($data["reference"]);
             $response->setMerchantTxId($data["merchantTxId"]);
             $response->setBackendTxId($data["backendTxId"]);
             $response->setAmount($data["amount"]);
-            $response->setResultPayment($data["resultPayment"]);
-            $response->setResultAVS($data["resultAVS"]);
+
+            //$response->setResultAVS($data["resultAVS"]);
         }
 
         return $response;
