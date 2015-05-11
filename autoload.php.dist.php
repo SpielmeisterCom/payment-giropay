@@ -13,8 +13,7 @@ $loader = require_once __DIR__.'/vendor/autoload.php';
 //AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 $classLoader = new Symfony\Component\ClassLoader\UniversalClassLoader();
-$classLoader->registerNamespace('PegasusCommerce', array(
-    __DIR__.'/src/main/php',
-    __DIR__.'/src/test/php'
+$classLoader->registerNamespace('PHPCommerce', array(
+    __DIR__.'/src'
 ));
 $classLoader->register();

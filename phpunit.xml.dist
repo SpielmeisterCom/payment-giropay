@@ -13,8 +13,9 @@
     </php>
 
     <testsuites>
-        <testsuite name="pc-giropay">
-            <directory>./src/test/php/</directory>
+        <testsuite name="phpcommerce-payment-giropay">
+            <directory>./src/PHPCommerce/Payment/Service/Gateway/Tests</directory>
+            <directory>./src/PHPCommerce/Vendor/Giropay/Service/Payment/Tests</directory>
         </testsuite>
     </testsuites>
     <php>
