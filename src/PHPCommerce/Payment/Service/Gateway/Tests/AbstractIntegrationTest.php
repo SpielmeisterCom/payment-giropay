@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway\Tests;
 
 use Guzzle\Tests\GuzzleTestCase;
 use PHPUnit_Framework_TestCase;

@@ -1,8 +1,8 @@
 <?php
-namespace PHPCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway\Tests;
 
-use PHPCommerce\Common\Payment\Dto\PaymentRequestDTO;
-use PHPCommerce\Common\Payment\Service\PaymentGatewayReportingService;
+use PHPCommerce\Core\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Core\Payment\Service\PaymentGatewayReportingService;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 
 class GiropayReportingServiceIntegrationTest extends AbstractIntegrationTest {
