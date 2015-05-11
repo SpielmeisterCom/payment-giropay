@@ -30,7 +30,7 @@ class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
         $responseGenerator->setSecret("fStSrJZVfQ");
 
         $this->responseGenerator = $responseGenerator;
-        self::setMockBasePath( __DIR__ . '/../../../../../../resources/mock-http-responses');
+        self::setMockBasePath( __DIR__ . '/mock-http-responses');
     }
 
     /**

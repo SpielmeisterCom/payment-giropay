@@ -3,8 +3,8 @@ namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
 use Guzzle\Http\Message\Response;
 use InvalidArgumentException;
-use PHPCommerce\Common\Payment\Dto\PaymentResponseDTO;
-use PHPCommerce\Common\Payment\PaymentType;
+use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
+use PHPCommerce\Core\Payment\PaymentType;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\GiropayErrorResponse;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\GiropayResponse;
