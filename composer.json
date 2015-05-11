@@ -1,29 +1,23 @@
 {
-    "name": "pegasuscommerce/payment-giropay",
+    "name": "phpcommerce/payment-giropay",
     "autoload": {
         "psr-0" : {
-            "PegasusCommerce" : "src/main/php"
+            "PHPCommerce" : "src"
         }
     },
     "version": "dev-master",
-    "description": "Pegasus Commerce Payment Giropay",
+    "description": "PHPCommerce Giropay Payment",
     "minimum-stability": "dev",
-    "license": "proprietary",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Julian Haupt",
-            "email": "jh@spielmeister.com"
+            "email": "julian.haupt@hauptmedia.de"
         }
     ],
-    "repositories": [{
-        "type": "vcs",
-        "url": "ssh://git@stash.abfallscout.de:7999/pc/pegasuscommerce.git"
-    }],
-    "require": {
-	    "pegasuscommerce/pegasuscommerce": "dev-master"
-    },
     "require-dev": {
         "phpunit/phpunit": "4.2.2",
-        "fabpot/goutte": "dev-master"
+        "fabpot/goutte": "dev-master",
+        "phpcommerce/core": "dev-master"
     }
 }

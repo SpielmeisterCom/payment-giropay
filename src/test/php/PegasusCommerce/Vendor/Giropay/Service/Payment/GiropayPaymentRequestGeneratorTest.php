@@ -2,11 +2,11 @@
 use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\RequestInterface;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGenerator;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGenerator;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
 
 class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
 
@@ -36,7 +36,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
      * @expectedException InvalidArgumentException
      */
     public function testMissingParameter() {
-        $request = $this->requestGenerator->buildRequest($this->client, new \PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest());
+        $request = $this->requestGenerator->buildRequest($this->client, new \PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest());
     }
 
     public function testTransactionStartRequest()

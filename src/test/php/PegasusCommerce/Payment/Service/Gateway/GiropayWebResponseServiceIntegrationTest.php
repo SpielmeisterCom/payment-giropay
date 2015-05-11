@@ -6,7 +6,7 @@
  * Time: 00:29
  */
 
-namespace PegasusCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway;
 
 
 class GiropayWebResponseServiceIntegrationTest {

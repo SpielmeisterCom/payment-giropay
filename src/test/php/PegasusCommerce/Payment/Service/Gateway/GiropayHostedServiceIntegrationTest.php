@@ -1,12 +1,12 @@
 <?php
-namespace PegasusCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway;
 
-use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
-use PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProvider;
-use PegasusCommerce\Common\Payment\Service\PaymentGatewayHostedService;
-use PegasusCommerce\Payment\Service\Gateway\GiropayConfiguration;
-use PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
+use PHPCommerce\Common\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProvider;
+use PHPCommerce\Common\Payment\Service\PaymentGatewayHostedService;
+use PHPCommerce\Payment\Service\Gateway\GiropayConfiguration;
+use PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 use Goutte\Client;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
@@ -41,7 +41,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
 
     /**
      * @dataProvider getMockHttpErrorResponses
-     * @expectedException PegasusCommerce\Core\Payment\Service\Exception\PaymentException
+     * @expectedException PHPCommerce\Core\Payment\Service\Exception\PaymentException
      */
     public function testPaymentExceptionOnError($errorMock) {
         $this->setMockResponse(
@@ -63,7 +63,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
 
         $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
 
-        $this->assertInstanceOf("PegasusCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
         $this->assertEquals("https://giropay.starfinanz.de/ftg/a/go/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815", $response->getResponseMap()[GiropayConstants::HOSTED_REDIRECT_URL]);
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getResponseMap()[GiropayConstants::GATEWAY_TRANSACTION_ID]);
     }
@@ -76,7 +76,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
 
         $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
 
-        $this->assertInstanceOf("PegasusCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
 
         $redirectUrl = $response->getResponseMap()[GiropayConstants::HOSTED_REDIRECT_URL];
 

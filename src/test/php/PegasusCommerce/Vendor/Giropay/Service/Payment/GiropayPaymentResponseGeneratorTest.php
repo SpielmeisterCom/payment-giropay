@@ -3,14 +3,14 @@ use Guzzle\Http\Client;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\Message\Response;
 use Guzzle\Tests\GuzzleTestCase;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStartResponse;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
+use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
 class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
     /**

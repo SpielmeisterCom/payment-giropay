@@ -1,5 +1,5 @@
 <?php
-namespace PegasusCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway;
 
 use Guzzle\Tests\GuzzleTestCase;
 use PHPUnit_Framework_TestCase;

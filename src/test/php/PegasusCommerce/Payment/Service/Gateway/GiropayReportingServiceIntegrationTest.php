@@ -1,9 +1,9 @@
 <?php
-namespace PegasusCommerce\Payment\Service\Gateway;
+namespace PHPCommerce\Payment\Service\Gateway;
 
-use PegasusCommerce\Common\Payment\Dto\PaymentRequestDTO;
-use PegasusCommerce\Common\Payment\Service\PaymentGatewayReportingService;
-use PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
+use PHPCommerce\Common\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Common\Payment\Service\PaymentGatewayReportingService;
+use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 
 class GiropayReportingServiceIntegrationTest extends AbstractIntegrationTest {
     /**
@@ -37,7 +37,7 @@ class GiropayReportingServiceIntegrationTest extends AbstractIntegrationTest {
 
         $response = $this->giropayReportingService->findDetailsByTransaction($requestDTO);
 
-        $this->assertInstanceOf("PegasusCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
 
         $this->assertFalse($response->isSuccessful());
 
