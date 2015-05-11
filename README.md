@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hauptmedia/hmc-payment-giropay.svg)](https://travis-ci.org/hauptmedia/hmc-payment-giropay) [![Coverage Status](https://coveralls.io/repos/hauptmedia/hmc-payment-giropay/badge.svg)](https://coveralls.io/r/hauptmedia/hmc-payment-giropay)
+[![Build Status](https://travis-ci.org/phpcommerce/payment-giropay.svg)](https://travis-ci.org/phpcommerce/payment-giropay) [![Coverage Status](https://coveralls.io/repos/phpcommerce/payment-giropay/badge.svg)](https://coveralls.io/r/phpcommerce/payment-giropay)
 
 This plugin implements the Giropay Payment API for the Pegasus Commerce framework.
 
