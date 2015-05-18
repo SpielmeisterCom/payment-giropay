@@ -1,9 +1,9 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Common\Payment\Dto\PaymentResponseDTO;
-use PHPCommerce\Common\Payment\Service\PaymentGatewayWebResponsePrintService;
-use PHPCommerce\Common\Payment\Service\PaymentGatewayWebResponseService;
+use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
+use PHPCommerce\Core\Payment\Service\PaymentGatewayWebResponsePrintService;
+use PHPCommerce\Core\Payment\Service\PaymentGatewayWebResponseService;
 use PHPCommerce\Core\Payment\Service\Exception\PaymentException;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -13,7 +13,7 @@
         <service id="pcHttpClient" class="Guzzle\Http\Client">
         </service>
 
-        <service id="pcGiropayRequestGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl">
+        <service id="pcGiropayRequestGenerator" class="PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl">
             <call method="setSecret">
                 <argument>%gateway.giropay.secret%</argument>
             </call>
@@ -25,13 +25,13 @@
             </call>
         </service>
 
-        <service id="pcGiropayResponseGenerator" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl">
+        <service id="pcGiropayResponseGenerator" class="PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl">
             <call method="setSecret">
                 <argument>%gateway.giropay.secret%</argument>
             </call>
         </service>
 
-        <service id="pcGiropayPaymentService" class="PegasusCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl">
+        <service id="pcGiropayPaymentService" class="PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl">
             <property name="httpClient" type="service" id="pcHttpClient"/>
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="requestGenerator" type="service" id="pcGiropayRequestGenerator"/>
@@ -41,7 +41,7 @@
             <property name="secret">%gateway.giropay.secret%</property>
         </service>
 
-        <service id="paymentGatewayConfigurationServiceProvider" class="PegasusCommerce\Common\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
+        <service id="paymentGatewayConfigurationServiceProvider" class="PHPCommerce\Core\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
             <call method="setGatewayConfigurationServices">
                 <argument type="collection">
                     <argument type="service" id="pcGiropayConfigurationService"/>
@@ -49,7 +49,7 @@
             </call>
         </service>
 
-        <service id="pcGiropayConfiguration" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationImpl">
+        <service id="pcGiropayConfiguration" class="PHPCommerce\Payment\Service\Gateway\GiropayConfigurationImpl">
             <property name="merchantId">%gateway.giropay.merchantId%</property>
             <property name="projectId">%gateway.giropay.projectId%</property>
             <property name="secret">%gateway.giropay.secret%</property>
@@ -57,21 +57,21 @@
             <property name="redirectUrl">%app.baseUrl%/gateway/giropay/redirect</property>
         </service>
 
-        <service id="pcGiropayHostedService" class="PegasusCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
+        <service id="pcGiropayHostedService" class="PHPCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="giropayPaymentService" type="service" id="pcGiropayPaymentService"/>
         </service>
 
-        <service id="pcGiropayReportingService" class="PegasusCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl">
+        <service id="pcGiropayReportingService" class="PHPCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="giropayPaymentService" type="service" id="pcGiropayPaymentService"/>
         </service>
 
-        <service id="pcGiropayRollbackService" class="PegasusCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl">
+        <service id="pcGiropayRollbackService" class="PHPCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
         </service>
 
-        <service id="pcGiropayConfigurationService" class="PegasusCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
+        <service id="pcGiropayConfigurationService" class="PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl">
             <property name="configuration" type="service" id="pcGiropayConfiguration"/>
             <property name="hostedService" type="service" id="pcGiropayHostedService"/>
         </service>

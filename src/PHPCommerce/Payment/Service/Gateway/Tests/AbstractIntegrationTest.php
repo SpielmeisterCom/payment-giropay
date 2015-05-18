@@ -27,7 +27,7 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
         $container = new ContainerBuilder();
         $container->setParameter("app.baseUrl", "https://www.abfallscout.de");
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../../../../../resources'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
         $loader->load("applicationContext-integrationtest.xml");
 
         /** @var PaymentGatewayConfigurationServiceProvider $paymentGatewayConfigurationServiceProvider */

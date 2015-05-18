@@ -1,8 +1,8 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Common\Payment\PaymentGatewayType;
-use PHPCommerce\Common\Payment\Service\failureReportingThreshold;
+use PHPCommerce\Core\Payment\PaymentGatewayType;
+use PHPCommerce\Core\Payment\Service\failureReportingThreshold;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 
 /**

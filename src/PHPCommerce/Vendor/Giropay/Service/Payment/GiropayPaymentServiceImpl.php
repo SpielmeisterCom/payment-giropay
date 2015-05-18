@@ -1,8 +1,8 @@
 <?php
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
-use Guzzle\Http\ClientInterface;
-use PHPCommerce\Common\Payment\Service\AbstractExternalPaymentGatewayCall;
+use GuzzleHttp\ClientInterface;
+use PHPCommerce\Core\Payment\Service\AbstractExternalPaymentGatewayCall;
 use PHPCommerce\Payment\Service\Gateway\GiropayConfiguration;
 
 /**
