@@ -41,7 +41,7 @@
             <property name="secret">%gateway.giropay.secret%</property>
         </service>
 
-        <service id="paymentGatewayConfigurationServiceProvider" class="PHPCommerce\Core\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
+        <service id="paymentGatewayConfigurationServiceProvider" class="PHPCommerce\Payment\Service\PaymentGatewayConfigurationServiceProviderImpl">
             <call method="setGatewayConfigurationServices">
                 <argument type="collection">
                     <argument type="service" id="pcGiropayConfigurationService"/>

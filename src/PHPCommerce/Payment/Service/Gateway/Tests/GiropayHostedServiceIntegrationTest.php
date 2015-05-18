@@ -41,7 +41,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
 
     /**
      * @dataProvider getMockHttpErrorResponses
-     * @expectedException PHPCommerce\Core\Payment\Service\Exception\PaymentException
+     * @expectedException PHPCommerce\Payment\Service\Exception\PaymentException
      */
     public function testPaymentExceptionOnError($errorMock) {
         $this->setMockResponse(
