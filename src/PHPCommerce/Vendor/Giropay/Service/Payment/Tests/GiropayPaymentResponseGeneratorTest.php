@@ -2,6 +2,7 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\Response;
+use GuzzleHttp\Subscriber\Mock;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyRequest;
@@ -12,6 +13,8 @@ use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
 class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
+    protected static $mockBasePath;
+
     /**
      * @var ClientInterface
      */
@@ -29,7 +32,16 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
         $responseGenerator->setSecret("fStSrJZVfQ");
 
         $this->responseGenerator = $responseGenerator;
-        self::setMockBasePath( __DIR__ . '/mock-http-responses');
+    }
+
+    public function getMockResponse($path)
+    {
+        $mock = new Mock([
+            file_get_contents( __DIR__ . "/mock-http-responses/" . $path)
+        ]);
+
+        $this->client->getEmitter()->attach($mock);
+        return $this->client->get('/');
     }
 
     /**
@@ -38,7 +50,7 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     public function testServerError() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('error-internal-server-error.txt');
+        $httpResponse = $this->getMockResponse('error-internal-server-error.txt');
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
@@ -48,7 +60,7 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     public function testMissingHash() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('error-missing-hash.txt');
+        $httpResponse = $this->getMockResponse('error-missing-hash.txt');
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
@@ -59,7 +71,7 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     public function testMalformedHash() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('error-malformed-hash.txt');
+        $httpResponse = $this->getMockResponse('error-malformed-hash.txt');
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
@@ -69,19 +81,19 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     public function testMalformedJson() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('error-malformed-json.txt');
+        $httpResponse = $this->getMockResponse('error-malformed-json.txt');
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
     }
 
     public function testTransactionStart() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('transaction-start.txt');
+        $httpResponse = $this->getMockResponse('transaction-start.txt');
 
         /** @var $response GiropayTransactionStartResponse */
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
-        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
+        $this->assertInstanceOf("PHPCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertTrue(GiropayResultType::$OK->equals($response->getResult()));
         $this->assertEquals("https://giropay.starfinanz.de/ftg/a/go/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815", $response->getRedirect());
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getReference());
@@ -91,12 +103,12 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     public function testAuthFail() {
         $request = new GiropayTransactionStartRequest();
 
-        $httpResponse = self::getMockResponse('error-auth-failed.txt');
+        $httpResponse = $this->getMockResponse('error-auth-failed.txt');
 
         /** @var $response GiropayTransactionStartResponse */
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
-        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
+        $this->assertInstanceOf("PHPCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStartResponse", $response);
         $this->assertTrue(GiropayResultType::$AUTHENTICATION_FAILED->equals($response->getResult()));
     }
 
@@ -110,12 +122,12 @@ class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     {
         $request = new GiropayTransactionStatusRequest();
 
-        $httpResponse = self::getMockResponse('transaction-status-nouserinput.txt');
+        $httpResponse = $this->getMockResponse('transaction-status-nouserinput.txt');
 
         /** @var $response GiropayTransactionStatusResponse */
         $response = $this->responseGenerator->buildResponseFromHttpResponse($httpResponse, $request);
 
-        $this->assertInstanceOf("PegasusCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStatusResponse", $response);
+        $this->assertInstanceOf("PHPCommerce\\Vendor\\Giropay\\Service\\Payment\\Message\\Transaction\\GiropayTransactionStatusResponse", $response);
         $this->assertTrue(GiropayPaymentResultType::$TIMEOUT_NO_USER_INPUT->equals($response->getPaymentResult()));
     }
 

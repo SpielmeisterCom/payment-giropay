@@ -1,7 +1,7 @@
 <?php
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Message\Response;
 use InvalidArgumentException;
 use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
 use PHPCommerce\Core\Payment\PaymentType;

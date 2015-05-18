@@ -1,7 +1,7 @@
 <?php
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
-use Guzzle\Http\Message\Response;
+use GuzzleHttp\Message\Response;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\GiropayRequest;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\GiropayResponse;
 use Symfony\Component\HttpFoundation\Request;
