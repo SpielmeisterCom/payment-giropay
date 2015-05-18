@@ -1,8 +1,7 @@
 <?php
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
-use Guzzle\Http\Message\EntityEnclosingRequestInterface;
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\RequestInterface;
 use InvalidArgumentException;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
@@ -31,6 +30,11 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
         return hash_hmac('MD5', $data, $secret);
     }
 
+    /**
+     * @param ClientInterface $client
+     * @param GiropayBankstatusRequest $giropayRequest
+     * @return RequestInterface
+     */
     protected function buildBankstatusRequest(ClientInterface $client, GiropayBankstatusRequest $giropayRequest) {
         $requestArray = array();
         $requestArray['merchantId']     = $this->getMerchantId();
@@ -48,15 +52,21 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
 
 
         $request = $client->createRequest(
-            'POST',
+            "POST",
             "https://payment.girosolution.de/girocheckout/api/v2/giropay/bankstatus",
-            array(),
-            $requestArray
+            [
+                'body' => $requestArray
+            ]
         );
 
         return $request;
     }
 
+    /**
+     * @param ClientInterface $client
+     * @param GiropayTransactionStatusRequest $giropayRequest
+     * @return RequestInterface
+     */
     protected function buildTransactionStatusRequest(ClientInterface $client, GiropayTransactionStatusRequest $giropayRequest)
     {
         $requestArray = array();
@@ -73,10 +83,12 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
 
         $requestArray['hash']           = $this->getHMACMD5Hash($this->getSecret(), $sortedValuesString);
 
-        $request = $client->post(
+        $request = $client->createRequest(
+            "POST",
             "https://payment.girosolution.de/girocheckout/api/v2/transaction/status",
-            array(),
-            $requestArray
+            [
+                'body' => $requestArray
+            ]
         );
 
         return $request;
@@ -85,7 +97,7 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
     /**
      * @param ClientInterface $client
      * @param GiropayTransactionStartRequest $giropayRequest
-     * @return EntityEnclosingRequestInterface
+     * @return RequestInterface
      */
     protected function buildTransactionStartRequest(ClientInterface $client, GiropayTransactionStartRequest $giropayRequest) {
         $requestArray = array();
@@ -154,10 +166,12 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
 
         $requestArray['hash']           = $this->getHMACMD5Hash($this->getSecret(), $sortedValuesString);
 
-        $request = $client->post(
+        $request = $client->createRequest(
+            "POST",
             "https://payment.girosolution.de/girocheckout/api/v2/transaction/start",
-            array(),
-            $requestArray
+            [
+                'body' => $requestArray
+            ]
         );
 
         return $request;
@@ -166,7 +180,7 @@ class GiropayRequestGeneratorImpl implements GiropayRequestGenerator {
     /**
      * @param ClientInterface $client
      * @param GiropayRequest $giropayRequest
-     * @return EntityEnclosingRequestInterface
+     * @return RequestInterface
      */
     public function buildRequest(ClientInterface $client, GiropayRequest $giropayRequest)
     {

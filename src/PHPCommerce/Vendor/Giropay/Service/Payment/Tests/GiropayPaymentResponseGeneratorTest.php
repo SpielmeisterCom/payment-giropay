@@ -1,8 +1,7 @@
 <?php
-use Guzzle\Http\Client;
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Message\Response;
-use Guzzle\Tests\GuzzleTestCase;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\Response;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGenerator;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionNotifyRequest;
@@ -12,7 +11,7 @@ use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransa
 use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayPaymentResultType;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 
-class GiropayPaymentResponseGeneratorTest extends GuzzleTestCase {
+class GiropayPaymentResponseGeneratorTest extends \PHPUnit_Framework_TestCase {
     /**
      * @var ClientInterface
      */

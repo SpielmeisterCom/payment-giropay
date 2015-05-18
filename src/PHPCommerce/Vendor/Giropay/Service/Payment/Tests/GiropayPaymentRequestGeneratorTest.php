@@ -1,7 +1,7 @@
 <?php
-use Guzzle\Http\Client;
-use Guzzle\Http\ClientInterface;
-use Guzzle\Http\Message\RequestInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\RequestInterface;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGenerator;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Bankstatus\GiropayBankstatusRequest;
@@ -55,7 +55,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
 
         $this->assertEquals(
-            RequestInterface::POST,
+            'POST',
             $httpRequest->getMethod()
         );
 
@@ -65,7 +65,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         );
 
         $this->assertEquals(
-            $httpRequest->getPostField('hash'),
+            $httpRequest->getBody()->getField('hash'),
             "78ef7a9b6b145708a0bcc1f7d4acdfdf"
         );
     }
@@ -78,7 +78,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
 
         $this->assertEquals(
-            RequestInterface::POST,
+            'POST',
             $httpRequest->getMethod()
         );
 
@@ -88,7 +88,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         );
 
         $this->assertEquals(
-            $httpRequest->getPostField('hash'),
+            $httpRequest->getBody()->getField('hash'),
             "be3341a44020021c0d6b8de95f067e28"
         );
     }
@@ -100,7 +100,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         $httpRequest = $this->requestGenerator->buildRequest($this->client, $request);
 
         $this->assertEquals(
-            RequestInterface::POST,
+            'POST',
             $httpRequest->getMethod()
         );
 
@@ -110,7 +110,7 @@ class GiropayPaymentRequestGeneratorTest extends PHPUnit_Framework_TestCase {
         );
 
         $this->assertEquals(
-            $httpRequest->getPostField('hash'),
+            $httpRequest->getBody()->getField('hash'),
             "b6e4de587edea9f2d61bd2820f0638e4"
         );
 

@@ -1,14 +1,13 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway\Tests;
 
-use Guzzle\Tests\GuzzleTestCase;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-abstract class AbstractIntegrationTest extends GuzzleTestCase {
+abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
     protected $client;
 
     /**
