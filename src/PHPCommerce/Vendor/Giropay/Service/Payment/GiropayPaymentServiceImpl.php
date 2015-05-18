@@ -2,7 +2,7 @@
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
 use GuzzleHttp\ClientInterface;
-use PHPCommerce\Core\Payment\Service\AbstractExternalPaymentGatewayCall;
+use PHPCommerce\Payment\Service\AbstractExternalPaymentGatewayCall;
 use PHPCommerce\Payment\Service\Gateway\GiropayConfiguration;
 
 /**

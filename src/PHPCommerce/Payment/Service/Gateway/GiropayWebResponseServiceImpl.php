@@ -1,10 +1,10 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayWebResponsePrintService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayWebResponseService;
-use PHPCommerce\Core\Payment\Service\Exception\PaymentException;
+use PHPCommerce\Payment\Dto\PaymentResponseDTO;
+use PHPCommerce\Payment\Service\PaymentGatewayWebResponsePrintService;
+use PHPCommerce\Payment\Service\PaymentGatewayWebResponseService;
+use PHPCommerce\Payment\Service\Exception\PaymentException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

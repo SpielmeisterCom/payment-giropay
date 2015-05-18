@@ -1,9 +1,9 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway\Tests;
 
-use PHPCommerce\Core\Payment\Dto\PaymentRequestDTO;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayConfigurationServiceProvider;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayHostedService;
+use PHPCommerce\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Payment\Service\PaymentGatewayConfigurationServiceProvider;
+use PHPCommerce\Payment\Service\PaymentGatewayHostedService;
 use PHPCommerce\Payment\Service\Gateway\GiropayConfiguration;
 use PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;

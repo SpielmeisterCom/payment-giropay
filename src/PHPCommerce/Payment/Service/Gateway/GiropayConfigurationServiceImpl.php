@@ -1,22 +1,22 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Core\Payment\Service\CreditCardTypesExtensionHandler;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayConfiguration;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayConfigurationService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayCreditCardService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayCustomerService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayFieldExtensionHandler;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayFraudService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayHostedService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayReportingService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayRollbackService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewaySubscriptionService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayTransactionConfirmationService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayTransactionService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayTransparentRedirectService;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayWebResponseService;
-use PHPCommerce\Core\Payment\Service\TRCreditCardExtensionHandler;
+use PHPCommerce\Payment\Service\CreditCardTypesExtensionHandler;
+use PHPCommerce\Payment\Service\PaymentGatewayConfiguration;
+use PHPCommerce\Payment\Service\PaymentGatewayConfigurationService;
+use PHPCommerce\Payment\Service\PaymentGatewayCreditCardService;
+use PHPCommerce\Payment\Service\PaymentGatewayCustomerService;
+use PHPCommerce\Payment\Service\PaymentGatewayFieldExtensionHandler;
+use PHPCommerce\Payment\Service\PaymentGatewayFraudService;
+use PHPCommerce\Payment\Service\PaymentGatewayHostedService;
+use PHPCommerce\Payment\Service\PaymentGatewayReportingService;
+use PHPCommerce\Payment\Service\PaymentGatewayRollbackService;
+use PHPCommerce\Payment\Service\PaymentGatewaySubscriptionService;
+use PHPCommerce\Payment\Service\PaymentGatewayTransactionConfirmationService;
+use PHPCommerce\Payment\Service\PaymentGatewayTransactionService;
+use PHPCommerce\Payment\Service\PaymentGatewayTransparentRedirectService;
+use PHPCommerce\Payment\Service\PaymentGatewayWebResponseService;
+use PHPCommerce\Payment\Service\TRCreditCardExtensionHandler;
 
 /**
  * @Service("pcGiropayConfigurationService")

@@ -1,10 +1,10 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Core\Payment\Dto\PaymentRequestDTO;
-use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayRollbackService;
-use PHPCommerce\Core\Payment\Service\Exception\PaymentException;
+use PHPCommerce\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Payment\Dto\PaymentResponseDTO;
+use PHPCommerce\Payment\Service\PaymentGatewayRollbackService;
+use PHPCommerce\Payment\Service\Exception\PaymentException;
 
 /**
  * @Service("pcGiropayRollbackService")

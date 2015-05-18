@@ -1,11 +1,11 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Core\Payment\Dto\PaymentRequestDTO;
-use PHPCommerce\Core\Payment\Dto\PaymentResponseDTO;
-use PHPCommerce\Core\Payment\PaymentType;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayReportingService;
-use PHPCommerce\Core\Payment\Service\Exception\PaymentException;
+use PHPCommerce\Payment\Dto\PaymentRequestDTO;
+use PHPCommerce\Payment\Dto\PaymentResponseDTO;
+use PHPCommerce\Payment\PaymentType;
+use PHPCommerce\Payment\Service\PaymentGatewayReportingService;
+use PHPCommerce\Payment\Service\Exception\PaymentException;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayConstants;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 use PHPCommerce\Vendor\Giropay\Service\Payment\Message\Transaction\GiropayTransactionStatusRequest;

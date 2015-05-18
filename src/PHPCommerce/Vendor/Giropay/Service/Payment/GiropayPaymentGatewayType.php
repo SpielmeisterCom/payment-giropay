@@ -1,7 +1,7 @@
 <?php
 namespace PHPCommerce\Vendor\Giropay\Service\Payment;
 
-use PHPCommerce\Core\Payment\PaymentGatewayType;
+use PHPCommerce\Payment\PaymentGatewayType;
 
 class GiropayPaymentGatewayType extends PaymentGatewayType {
     /**

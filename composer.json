@@ -7,7 +7,7 @@
     },
     "version": "dev-master",
     "description": "PHPCommerce Giropay Payment",
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -18,6 +18,7 @@
     "require-dev": {
         "phpunit/phpunit": "4.2.2",
         "fabpot/goutte": "dev-master",
-        "phpcommerce/core": "dev-master"
+        "phpcommerce/core": "dev-master",
+        "phpcommerce/payment": "dev-master"
     }
 }

@@ -1,9 +1,9 @@
 <?php
 namespace PHPCommerce\Payment\Service\Gateway;
 
-use PHPCommerce\Core\Payment\PaymentGatewayType;
-use PHPCommerce\Core\Payment\Service\failureReportingThreshold;
-use PHPCommerce\Core\Payment\Service\PaymentGatewayConfiguration;
+use PHPCommerce\Payment\PaymentGatewayType;
+use PHPCommerce\Payment\Service\failureReportingThreshold;
+use PHPCommerce\Payment\Service\PaymentGatewayConfiguration;
 use PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentGatewayType;
 
 interface GiropayConfiguration extends PaymentGatewayConfiguration {
