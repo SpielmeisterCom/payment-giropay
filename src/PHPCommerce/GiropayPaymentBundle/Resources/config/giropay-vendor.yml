@@ -6,7 +6,7 @@ parameters:
 
 services:
     phpcommerce.http_client:
-        class:          Guzzle\Http\Client
+        class:          GuzzleHttp\Client
 
     phpcommerce.payment.vendor.giropay.payment_service:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl

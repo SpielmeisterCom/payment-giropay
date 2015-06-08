@@ -35,13 +35,22 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
         $this->container = $container;
 
         $this->client = $this->container->get("phpcommerce.http_client");
-
-        self::setMockBasePath( __DIR__ . '/../../../../../resources/mock-http-responses' );
     }
 
+    /*
+    public function getMockResponse($path)
+    {
+        $mock = new Mock([
+            file_get_contents( __DIR__ . "/mock-http-responses/" . $path)
+        ]);
+
+        $this->client->getEmitter()->attach($mock);
+        return $this->client->get('/');
+    }
+    */
 
     public function getMockHttpResponsesByPrefix($prefix) {
-        $path = __DIR__ . "/../../../../../resources/mock-http-responses/";
+        $path = __DIR__ . "/mock-http-responses/";
 
         $fileNames = glob( $path . $prefix . "-*");
 
