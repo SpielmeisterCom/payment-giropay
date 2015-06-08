@@ -20,15 +20,45 @@ use PHPCommerce\Vendor\Giropay\Service\Payment\Type\GiropayResultType;
 class GiropayHostedServiceImpl implements PaymentGatewayHostedService {
     /**
      * @var GiropayConfiguration
-     * @Resource(name = "pcGiropayConfiguration")
      */
-    public $configuration;
+    protected $configuration;
 
     /**
      * @var ServiceStatusDetectable
-     * @Resource(name = "pcGiropayPaymentServiceImpl")
      */
-    public $giropayPaymentService;
+    protected $giropayPaymentService;
+
+    /**
+     * @return GiropayConfiguration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param GiropayConfiguration $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @return ServiceStatusDetectable
+     */
+    public function getGiropayPaymentService()
+    {
+        return $this->giropayPaymentService;
+    }
+
+    /**
+     * @param ServiceStatusDetectable $giropayPaymentService
+     */
+    public function setGiropayPaymentService($giropayPaymentService)
+    {
+        $this->giropayPaymentService = $giropayPaymentService;
+    }
 
     /**
      * @param PaymentRequestDTO $paymentRequestDTO

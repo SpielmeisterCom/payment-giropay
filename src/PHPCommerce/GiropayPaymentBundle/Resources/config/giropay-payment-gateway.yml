@@ -16,13 +16,13 @@ services:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl
           calls:
             - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
-            - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
+            - [setGiropayPaymentService,  ["@phpcommerce.payment.vendor.giropay.payment_service"]]
 
     phpcommerce.payment.gateway.reporting_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl
           calls:
             - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
-            - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
+            - [setGiropayPaymentService,  ["@phpcommerce.payment.vendor.giropay.payment_service"]]
 
     phpcommerce.payment.gateway.giropay.configuration_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl
