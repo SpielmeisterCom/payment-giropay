@@ -1,6 +1,7 @@
 services:
     phpcommerce.payment.gateway.giropay.configuration:
           class:       PHPCommerce\Payment\Service\Gateway\GiropayConfigurationImpl
+          calls:
             - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
             - [setProjectId,              ["%gateway.giropay.projectId%"]]
             - [setSecret,                 ["%gateway.giropay.secret%"]]
@@ -13,16 +14,18 @@ services:
 
     phpcommerce.payment.gateway.giropay.hosted_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl
+          calls:
             - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
             - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
 
     phpcommerce.payment.gateway.reporting_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl
+          calls:
             - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
             - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
 
     phpcommerce.payment.gateway.giropay.configuration_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl
+          calls:
             - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
             - [setHostedService,          ["@phpcommerce.payment.gateway.giropay.hosted_service"]]
-

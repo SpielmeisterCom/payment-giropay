@@ -31,7 +31,7 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
         $loader      = new YamlFileLoader($container, new FileLocator(array(__DIR__ . "/../Resources/config")));
         $loader->load( 'giropay-integration-test.yml');
 
-        $this->giropayConfiguration = $this->container->get("phpcommerce.payment.gateway.giropay.configuration");
+        $this->giropayConfiguration = $container->get("phpcommerce.payment.gateway.giropay.configuration");
         $this->container = $container;
 
         $this->client = $this->container->get("phpcommerce.http_client");

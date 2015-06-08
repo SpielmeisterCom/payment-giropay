@@ -10,6 +10,7 @@ services:
 
     phpcommerce.payment.vendor.giropay.payment_service:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl
+         calls:
            - [setHttpClient,             ["@phpcommerce.http_client"]]
            - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
            - [setRequestGenerator,       ["@phpcommerce.payment.vendor.giropay.request_generator"]]
@@ -21,10 +22,12 @@ services:
 
     phpcommerce.payment.vendor.giropay.request_generator:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl
+         calls:
            - [setSecret,                 ["%gateway.giropay.secret%"]]
            - [setProjectId,              ["%gateway.giropay.projectId%"]]
            - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
 
     phpcommerce.payment.vendor.giropay.response_generator:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl
+         calls:
            - [setSecret,                 ["%gateway.giropay.secret%"]]

@@ -1,3 +1,7 @@
+imports:
+    - { resource: giropay-vendor.yml }
+    - { resource: giropay-payment-gateway.yml }
+
 parameters:
     gateway.giropay.merchantId:  3609575
     gateway.giropay.projectId:   8797
