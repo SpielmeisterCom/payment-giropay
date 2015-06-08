@@ -1,0 +1,4 @@
+parameters:
+    gateway.giropay.merchantId:  3609575
+    gateway.giropay.projectId:   8797
+    gateway.giropay.secret:      fStSrJZVfQ

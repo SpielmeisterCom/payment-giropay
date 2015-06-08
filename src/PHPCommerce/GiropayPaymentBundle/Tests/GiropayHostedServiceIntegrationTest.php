@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\Payment\Service\Gateway\Tests;
+namespace PHPCommerce\GiropayPaymentBundle\Tests;
 
 use PHPCommerce\Payment\Dto\PaymentRequestDTO;
 use PHPCommerce\Payment\Service\PaymentGatewayConfigurationServiceProvider;
@@ -24,7 +24,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
     public function setUp()
     {
         parent::setUp();
-        $this->giropayHostedService = $this->container->get("pcGiropayHostedService");
+        $this->giropayHostedService = $this->container->get("phpcommerce.payment.gateway.giropay.hosted_service");
     }
 
     protected function generatePaymentRequestDTO() {

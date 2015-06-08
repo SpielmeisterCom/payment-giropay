@@ -1,11 +1,12 @@
 <?php
-namespace PHPCommerce\Payment\Service\Gateway\Tests;
+namespace PHPCommerce\GiropayPaymentBundle\Tests;
 
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
     protected $client;
@@ -27,21 +28,13 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
         $container = new ContainerBuilder();
         $container->setParameter("app.baseUrl", "https://www.abfallscout.de");
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load("applicationContext-integrationtest.xml");
+        $loader      = new YamlFileLoader($container, new FileLocator(array(__DIR__ . "/../Resources/config")));
+        $loader->load( 'giropay-integration-test.yml');
 
-        /** @var PaymentGatewayConfigurationServiceProvider $paymentGatewayConfigurationServiceProvider */
-        $paymentGatewayConfigurationServiceProvider = $container->get('paymentGatewayConfigurationServiceProvider');
-        $configurationServices = $paymentGatewayConfigurationServiceProvider->getGatewayConfigurationServices();
-
-        if (count($configurationServices) != 1) {
-            throw new Exception("Expected that only one payment interface is configured");
-        }
-
-        $this->giropayConfiguration = $configurationServices[0];
+        $this->giropayConfiguration = $this->container->get("phpcommerce.payment.gateway.giropay.configuration");
         $this->container = $container;
 
-        $this->client = $this->container->get("pcHttpClient");
+        $this->client = $this->container->get("phpcommerce.http_client");
 
         self::setMockBasePath( __DIR__ . '/../../../../../resources/mock-http-responses' );
     }

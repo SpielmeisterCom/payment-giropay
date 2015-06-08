@@ -1,0 +1,28 @@
+services:
+    phpcommerce.payment.gateway.giropay.configuration:
+          class:       PHPCommerce\Payment\Service\Gateway\GiropayConfigurationImpl
+            - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
+            - [setProjectId,              ["%gateway.giropay.projectId%"]]
+            - [setSecret,                 ["%gateway.giropay.secret%"]]
+            - [setNotifyUrl,              ["%app.baseUrl%/gateway/giropay/notify"]]
+            - [setRedirectUrl,            ["%app.baseUrl%/gateway/giropay/redirect"]]
+
+    phpcommerce.payment.gateway.giropay.rollback_service:
+          class:      PHPCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl
+
+
+    phpcommerce.payment.gateway.giropay.hosted_service:
+          class:      PHPCommerce\Payment\Service\Gateway\GiropayHostedServiceImpl
+            - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
+            - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
+
+    phpcommerce.payment.gateway.reporting_service:
+          class:      PHPCommerce\Payment\Service\Gateway\GiropayReportingServiceImpl
+            - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
+            - [setGiropayPaymentService,  ["@phpcommerce.payment.gateway.giropay.payment_service"]]
+
+    phpcommerce.payment.gateway.giropay.configuration_service:
+          class:      PHPCommerce\Payment\Service\Gateway\GiropayConfigurationServiceImpl
+            - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
+            - [setHostedService,          ["@phpcommerce.payment.gateway.giropay.hosted_service"]]
+

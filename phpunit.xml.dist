@@ -14,7 +14,7 @@
 
     <testsuites>
         <testsuite name="phpcommerce-payment-giropay">
-            <directory>./src/PHPCommerce/Payment/Service/Gateway/Tests</directory>
+            <directory>./src/PHPCommerce/GiropayPaymentBundle/Tests</directory>
             <directory>./src/PHPCommerce/Vendor/Giropay/Service/Payment/Tests</directory>
         </testsuite>
     </testsuites>

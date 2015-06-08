@@ -1,0 +1,30 @@
+parameters:
+    giropay.merchantId: ''
+    giropay.projectId:  ''
+    giropay.secret:     ''
+
+
+services:
+    phpcommerce.http_client:
+        class:          Guzzle\Http\Client
+
+    phpcommerce.payment.vendor.giropay.payment_service:
+         class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayPaymentServiceImpl
+           - [setHttpClient,             ["@phpcommerce.http_client"]]
+           - [setConfiguration,          ["@phpcommerce.payment.gateway.giropay.configuration"]]
+           - [setRequestGenerator,       ["@phpcommerce.payment.vendor.giropay.request_generator"]]
+           - [setResponseGenerator,      ["@phpcommerce.payment.vendor.giropay.response_generator"]]
+           - [setSecret,                 ["%gateway.giropay.secret%"]]
+           - [setProjectId,              ["%gateway.giropay.projectId%"]]
+           - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
+
+
+    phpcommerce.payment.vendor.giropay.request_generator:
+         class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl
+           - [setSecret,                 ["%gateway.giropay.secret%"]]
+           - [setProjectId,              ["%gateway.giropay.projectId%"]]
+           - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
+
+    phpcommerce.payment.vendor.giropay.response_generator:
+         class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl
+           - [setSecret,                 ["%gateway.giropay.secret%"]]

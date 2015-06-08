@@ -12,27 +12,27 @@ class GiropayConfigurationImpl implements GiropayConfiguration {
     /**
      * @var string
      */
-    public $secret;
+    protected $secret;
 
     /**
      * @var string
      */
-    public $merchantId;
+    protected $merchantId;
 
     /**
      * @var string
      */
-    public $projectId;
+    protected $projectId;
 
     /**
      * @var string
      */
-    public $notifyUrl;
+    protected $notifyUrl;
 
     /**
      * @var string
      */
-    public $redirectUrl;
+    protected $redirectUrl;
 
     /**
      * @var int
@@ -43,6 +43,7 @@ class GiropayConfigurationImpl implements GiropayConfiguration {
      * @var bool
      */
     protected $performAuthorizeAndCapture = true;
+
 
     /**
      * <p> Gets the configured transaction type for this module. </p>
@@ -218,6 +219,46 @@ class GiropayConfigurationImpl implements GiropayConfiguration {
     public function getGatewayType()
     {
         return GiropayPaymentGatewayType::$GIROPAY;
+    }
+
+    /**
+     * @param string $secret
+     */
+    public function setSecret($secret)
+    {
+        $this->secret = $secret;
+    }
+
+    /**
+     * @param string $merchantId
+     */
+    public function setMerchantId($merchantId)
+    {
+        $this->merchantId = $merchantId;
+    }
+
+    /**
+     * @param string $projectId
+     */
+    public function setProjectId($projectId)
+    {
+        $this->projectId = $projectId;
+    }
+
+    /**
+     * @param string $notifyUrl
+     */
+    public function setNotifyUrl($notifyUrl)
+    {
+        $this->notifyUrl = $notifyUrl;
+    }
+
+    /**
+     * @param string $redirectUrl
+     */
+    public function setRedirectUrl($redirectUrl)
+    {
+        $this->redirectUrl = $redirectUrl;
     }
 
     /**
