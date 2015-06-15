@@ -718,12 +718,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpcommerce/payment.git",
-                "reference": "1b0ffb6b5532d4a6742ca5d54ed257ed9d396fc4"
+                "reference": "46f1ee50572d92b7c1fef6a4a28574b9adcb0430"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpcommerce/payment/zipball/1b0ffb6b5532d4a6742ca5d54ed257ed9d396fc4",
-                "reference": "1b0ffb6b5532d4a6742ca5d54ed257ed9d396fc4",
+                "url": "https://api.github.com/repos/phpcommerce/payment/zipball/46f1ee50572d92b7c1fef6a4a28574b9adcb0430",
+                "reference": "46f1ee50572d92b7c1fef6a4a28574b9adcb0430",
                 "shasum": ""
             },
             "require-dev": {
@@ -747,7 +747,7 @@
                 }
             ],
             "description": "PHPCommerce Payment",
-            "time": "2015-06-08 09:00:03"
+            "time": "2015-06-15 10:51:20"
         },
         {
             "name": "phpunit/php-code-coverage",
