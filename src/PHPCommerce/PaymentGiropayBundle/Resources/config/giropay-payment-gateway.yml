@@ -1,6 +1,8 @@
 services:
     phpcommerce.payment.gateway.giropay.configuration:
           class:       PHPCommerce\Payment\Service\Gateway\GiropayConfigurationImpl
+          tags:
+            -  { name: phpcommerce.payment.gateway }
           calls:
             - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
             - [setProjectId,              ["%gateway.giropay.projectId%"]]
