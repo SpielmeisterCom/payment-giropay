@@ -29,15 +29,11 @@ class GiropayReportingServiceIntegrationTest extends AbstractIntegrationTest {
      * @group liveTest
      */
     public function testRequestHostedEndpointLive() {
-/*        $this->setMockResponse(
-            $this->client, array('transaction-start.txt')
-        );
-*/
         $requestDTO = $this->generatePaymentRequestDTO("a07af793-3c0e-4ecb-a1f4-ede94ca2e678");
 
         $response = $this->giropayReportingService->findDetailsByTransaction($requestDTO);
 
-        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Payment\\Dto\\PaymentResponseDTO", $response);
 
         $this->assertFalse($response->isSuccessful());
 

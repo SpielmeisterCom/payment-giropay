@@ -44,9 +44,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
      * @expectedException PHPCommerce\Payment\Service\Exception\PaymentException
      */
     public function testPaymentExceptionOnError($errorMock) {
-        $this->setMockResponse(
-            $this->client, array( $errorMock )
-        );
+        $this->setMockResponse($errorMock);
 
         $requestDTO = $this->generatePaymentRequestDTO();
 
@@ -55,15 +53,13 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
     }
 
     public function testRequestHostedEndpoint() {
-        $this->setMockResponse(
-            $this->client, array('transaction-start.txt')
-        );
+        $this->setMockResponse('transaction-start.txt');
 
         $requestDTO = $this->generatePaymentRequestDTO();
 
         $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
 
-        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Payment\\Dto\\PaymentResponseDTO", $response);
         $this->assertEquals("https://giropay.starfinanz.de/ftg/a/go/07i2i1k00pp09xkrnro1yaqk;jsessionid=4F6EA3CD985DEE04952FC126487F4815", $response->getResponseMap()[GiropayConstants::HOSTED_REDIRECT_URL]);
         $this->assertEquals("a07af793-3c0e-4ecb-a1f4-ede94ca2e678", $response->getResponseMap()[GiropayConstants::GATEWAY_TRANSACTION_ID]);
     }
@@ -76,7 +72,7 @@ class GiropayHostedServiceIntegrationTest extends AbstractIntegrationTest {
 
         $response = $this->giropayHostedService->requestHostedEndpoint($requestDTO);
 
-        $this->assertInstanceOf("PHPCommerce\\Common\\Payment\\Dto\\PaymentResponseDTO", $response);
+        $this->assertInstanceOf("PHPCommerce\\Payment\\Dto\\PaymentResponseDTO", $response);
 
         $redirectUrl = $response->getResponseMap()[GiropayConstants::HOSTED_REDIRECT_URL];
 

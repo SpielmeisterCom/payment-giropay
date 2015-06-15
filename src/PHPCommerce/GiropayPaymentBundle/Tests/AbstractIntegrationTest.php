@@ -1,6 +1,7 @@
 <?php
 namespace PHPCommerce\GiropayPaymentBundle\Tests;
 
+use GuzzleHttp\Subscriber\Mock;
 use PHPUnit_Framework_TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
@@ -48,6 +49,14 @@ abstract class AbstractIntegrationTest extends \PHPUnit_Framework_TestCase {
         return $this->client->get('/');
     }
     */
+
+    protected function setMockResponse($path) {
+        $mock = new Mock([
+            file_get_contents( __DIR__ . "/mock-http-responses/" . $path)
+        ]);
+
+        $this->client->getEmitter()->attach($mock);
+    }
 
     public function getMockHttpResponsesByPrefix($prefix) {
         $path = __DIR__ . "/mock-http-responses/";
