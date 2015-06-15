@@ -5,8 +5,8 @@ services:
             - [setMerchantId,             ["%phpcommerce.payment.gateway.giropay.configuration.merchantId%"]]
             - [setProjectId,              ["%phpcommerce.payment.gateway.giropay.configuration.projectId%"]]
             - [setSecret,                 ["%phpcommerce.payment.gateway.giropay.configuration.secret%"]]
-            - [setNotifyUrl,              ["%app.baseUrl%/gateway/giropay/notify"]]
-            - [setRedirectUrl,            ["%app.baseUrl%/gateway/giropay/redirect"]]
+            - [setNotifyUrl,              ["/gateway/giropay/notify"]]
+            - [setRedirectUrl,            ["/gateway/giropay/redirect"]]
 
     phpcommerce.payment.gateway.giropay.rollback_service:
           class:      PHPCommerce\Payment\Service\Gateway\GiropayRollbackServiceImpl
