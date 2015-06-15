@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\GiropayPaymentBundle\Tests;
+namespace PHPCommerce\PaymentGiropayBundle\Tests;
 
 use GuzzleHttp\Subscriber\Mock;
 use PHPUnit_Framework_TestCase;

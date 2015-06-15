@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\GiropayPaymentBundle\Controller;
+namespace PHPCommerce\PaymentGiropayBundle\Controller;
 
 class GiropayController {
     /**

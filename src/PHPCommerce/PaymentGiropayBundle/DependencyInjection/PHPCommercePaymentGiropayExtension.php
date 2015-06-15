@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\GiropayPaymentBundle\DependencyInjection;
+namespace PHPCommerce\PaymentGiropayBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;

@@ -1,5 +1,5 @@
 <?php
-namespace PHPCommerce\GiropayPaymentBundle\Tests;
+namespace PHPCommerce\PaymentGiropayBundle\Tests;
 
 use PHPCommerce\Payment\Dto\PaymentRequestDTO;
 use PHPCommerce\Payment\Service\PaymentGatewayReportingService;

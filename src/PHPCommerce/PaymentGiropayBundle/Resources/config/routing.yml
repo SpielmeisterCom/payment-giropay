@@ -1,7 +1,7 @@
 phpcommerce.payment.gateway.giropay.redirect:
     path:     /payment/giropay/redirect
-    defaults: { _controller: PHPCommerceGiropayPaymentBundle:Giropay:redirect }
+    defaults: { _controller: PHPCommercePaymentGiropayBundle:Giropay:redirect }
 
 phpcommerce.payment.gateway.giropay.notify:
     path:     /payment/giropay/notify
-    defaults: { _controller: PHPCommerceGiropayPaymentBundle:Giropay:notify }
+    defaults: { _controller: PHPCommercePaymentGiropayBundle:Giropay:notify }
