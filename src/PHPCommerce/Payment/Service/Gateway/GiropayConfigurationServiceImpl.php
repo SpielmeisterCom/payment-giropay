@@ -56,6 +56,39 @@ class GiropayConfigurationServiceImpl implements PaymentGatewayConfigurationServ
     }
 
     /**
+     * @param GiropayGatewayConfiguration $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @param PaymentGatewayHostedService $hostedService
+     */
+    public function setHostedService($hostedService)
+    {
+        $this->hostedService = $hostedService;
+    }
+
+    /**
+     * @param PaymentGatewayHostedService $rollbackService
+     */
+    public function setRollbackService($rollbackService)
+    {
+        $this->rollbackService = $rollbackService;
+    }
+
+    /**
+     * @param PaymentGatewayWebResponseService $webResponseService
+     */
+    public function setWebResponseService($webResponseService)
+    {
+        $this->webResponseService = $webResponseService;
+    }
+
+
+    /**
      * @return PaymentGatewayTransactionService
      */
     public function getTransactionService()
