@@ -3,6 +3,6 @@ imports:
     - { resource: giropay-payment-gateway.yml }
 
 parameters:
-    gateway.giropay.merchantId:  3609575
-    gateway.giropay.projectId:   8797
-    gateway.giropay.secret:      fStSrJZVfQ
+    phpcommerce.payment.gateway.giropay.configuration.merchantId:  3609575
+    phpcommerce.payment.gateway.giropay.configuration.projectId:   8797
+    phpcommerce.payment.gateway.giropay.configuration.secret:      fStSrJZVfQ

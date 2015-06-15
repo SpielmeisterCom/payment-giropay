@@ -2,9 +2,9 @@ services:
     phpcommerce.payment.gateway.giropay.configuration:
           class:       PHPCommerce\Payment\Service\Gateway\GiropayConfigurationImpl
           calls:
-            - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
-            - [setProjectId,              ["%gateway.giropay.projectId%"]]
-            - [setSecret,                 ["%gateway.giropay.secret%"]]
+            - [setMerchantId,             ["%phpcommerce.payment.gateway.giropay.configuration.merchantId%"]]
+            - [setProjectId,              ["%phpcommerce.payment.gateway.giropay.configuration.projectId%"]]
+            - [setSecret,                 ["%phpcommerce.payment.gateway.giropay.configuration.secret%"]]
             - [setNotifyUrl,              ["%app.baseUrl%/gateway/giropay/notify"]]
             - [setRedirectUrl,            ["%app.baseUrl%/gateway/giropay/redirect"]]
 

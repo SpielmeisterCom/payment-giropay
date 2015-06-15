@@ -13,11 +13,11 @@ services:
     phpcommerce.payment.vendor.giropay.request_generator:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayRequestGeneratorImpl
          calls:
-           - [setSecret,                 ["%gateway.giropay.secret%"]]
-           - [setProjectId,              ["%gateway.giropay.projectId%"]]
-           - [setMerchantId,             ["%gateway.giropay.merchantId%"]]
+           - [setSecret,                 ["%phpcommerce.payment.gateway.giropay.configuration.secret%"]]
+           - [setProjectId,              ["%phpcommerce.payment.gateway.giropay.configuration.projectId%"]]
+           - [setMerchantId,             ["%phpcommerce.payment.gateway.giropay.configuration.merchantId%"]]
 
     phpcommerce.payment.vendor.giropay.response_generator:
          class:        PHPCommerce\Vendor\Giropay\Service\Payment\GiropayResponseGeneratorImpl
          calls:
-           - [setSecret,                 ["%gateway.giropay.secret%"]]
+           - [setSecret,                 ["%phpcommerce.payment.gateway.giropay.configuration.secret%"]]
