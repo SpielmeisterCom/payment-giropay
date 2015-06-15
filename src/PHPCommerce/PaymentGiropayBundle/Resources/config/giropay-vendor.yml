@@ -1,9 +1,3 @@
-parameters:
-    giropay.merchantId: ''
-    giropay.projectId:  ''
-    giropay.secret:     ''
-
-
 services:
     phpcommerce.http_client:
         class:          GuzzleHttp\Client
