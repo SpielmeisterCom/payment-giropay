@@ -14,7 +14,7 @@ class GiropayReportingServiceIntegrationTest extends AbstractIntegrationTest {
     public function setUp()
     {
         parent::setUp();
-        $this->giropayReportingService = $this->container->get("pcGiropayReportingService");
+        $this->giropayReportingService = $this->container->get("phpcommerce.payment.gateway.reporting_service");
     }
 
     protected function generatePaymentRequestDTO($reference) {

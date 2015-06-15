@@ -5,33 +5,26 @@ use GuzzleHttp\ClientInterface;
 use PHPCommerce\Payment\Service\AbstractExternalPaymentGatewayCall;
 use PHPCommerce\Payment\Service\Gateway\GiropayConfiguration;
 
-/**
- * @Service("pcGiropayPaymentService")
- */
 class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
     /**
      * @var GiropayConfiguration
-     * @Resource(name = "pcGiropayConfiguration")
      */
-    public $configuration;
+    protected $configuration;
 
     /**
      * @var ClientInterface
-     * @Resource(name = "pcHttpClient")
      */
-    public $httpClient;
+    protected $httpClient;
 
     /**
      * @var GiropayRequestGenerator
-     * @Resource(name = "pcGiropayRequestGenerator")
      */
-    public $requestGenerator;
+    protected $requestGenerator;
 
     /**
      * @var GiropayResponseGenerator
-     * @Resource(name = "pcGiropayResponseGenerator")
      */
-    public $responseGenerator;
+    protected $responseGenerator;
 
     /**
      * @return String
@@ -40,6 +33,71 @@ class GiropayPaymentServiceImpl extends AbstractExternalPaymentGatewayCall {
     {
         return 'Giropay';
     }
+
+    /**
+     * @return GiropayConfiguration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param GiropayConfiguration $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @return ClientInterface
+     */
+    public function getHttpClient()
+    {
+        return $this->httpClient;
+    }
+
+    /**
+     * @param ClientInterface $httpClient
+     */
+    public function setHttpClient($httpClient)
+    {
+        $this->httpClient = $httpClient;
+    }
+
+    /**
+     * @return GiropayRequestGenerator
+     */
+    public function getRequestGenerator()
+    {
+        return $this->requestGenerator;
+    }
+
+    /**
+     * @param GiropayRequestGenerator $requestGenerator
+     */
+    public function setRequestGenerator($requestGenerator)
+    {
+        $this->requestGenerator = $requestGenerator;
+    }
+
+    /**
+     * @return GiropayResponseGenerator
+     */
+    public function getResponseGenerator()
+    {
+        return $this->responseGenerator;
+    }
+
+    /**
+     * @param GiropayResponseGenerator $responseGenerator
+     */
+    public function setResponseGenerator($responseGenerator)
+    {
+        $this->responseGenerator = $responseGenerator;
+    }
+
 
 
     /**
