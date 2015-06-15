@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/phpcommerce/payment-giropay.svg)](https://travis-ci.org/phpcommerce/payment-giropay) [![Coverage Status](https://coveralls.io/repos/phpcommerce/payment-giropay/badge.svg)](https://coveralls.io/r/phpcommerce/payment-giropay)
 
-This plugin implements the Giropay Payment API for the Pegasus Commerce framework.
+This plugin implements the Giropay Payment API for the PHPCommerce framework.
 
 The following giropay services are supported:
 
